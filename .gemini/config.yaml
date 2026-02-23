@@ -4,7 +4,7 @@
 analysis:
   # Directories to analyze
   include:
-    - "Assets/01.Scripts/**/*.cs"
+    - "Assets/02.Scripts/**/*.cs"
 
   # Directories to exclude
   exclude:
