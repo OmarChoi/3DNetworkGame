@@ -1,0 +1,102 @@
+# Gemini Code Assist Configuration for PlanetCrasher
+
+# Code Analysis Settings
+analysis:
+  # Directories to analyze
+  include:
+    - "Assets/01.Scripts/**/*.cs"
+
+  # Directories to exclude
+  exclude:
+    - "Assets/Plugins/**"
+    - "Library/**"
+    - "Temp/**"
+    - "Obj/**"
+    - "Build/**"
+    - "Builds/**"
+    - "Logs/**"
+    - "MemoryCaptures/**"
+    - "UserSettings/**"
+    - "*.meta"
+
+# Coding Standards
+standards:
+  csharp:
+    naming_conventions:
+      class: "PascalCase"
+      method: "PascalCase"
+      variable: "camelCase"
+      private_field: "_camelCase"
+      constant: "PascalCase"
+      interface: "IPascalCase"
+      enum: "EPascalCase"
+      ui_class: "UI_PascalCase"
+      scriptable_object: "PascalCaseSO"
+      coroutine: "MethodName_Coroutine"
+
+    patterns:
+      - "Use Unity lifecycle methods appropriately (Awake, Start, Update, OnDisable)"
+      - "Always specify access modifiers for all members"
+      - "Use [SerializeField] for Inspector-exposed private fields"
+      - "Use readonly struct for Value Objects (Currency, ClickInfo, etc.)"
+      - "Separate MetaData (ScriptableObject) from Runtime data (Domain Object)"
+      - "Use static events: public static event Action OnDataChanged"
+      - "Follow 3-tier architecture for OutGame features: Repository → Domain → Manager"
+
+# AI Assistant Context
+context:
+  frameworks:
+    - "Unity Engine"
+    - "LeanPool (Object Pooling)"
+    - "DOTween (Tweening/Animation)"
+    - "Firebase (Auth, Firestore)"
+    - "UniTask (Async)"
+    - "TextMeshPro"
+
+  common_patterns:
+    - "Singleton pattern for managers (GameManager, CurrencyManager, UpgradeManager, SoundManager, AccountManager)"
+    - "Repository pattern with Local/Firebase implementations"
+    - "Strategy pattern (IFeedback, IClickable)"
+    - "Observer pattern with static events"
+    - "Object pooling with LeanPool"
+    - "Value Object pattern (readonly struct)"
+    - "Specification pattern for validation"
+    - "3-tier OutGame architecture: 1.Repository → 2.Domain → 3.Manager"
+
+  best_practices:
+    - "Avoid heavy operations in Update()"
+    - "Use LeanPool for frequently instantiated objects (Bullet, Missile, etc.)"
+    - "Cache component references in Awake()"
+    - "Use coroutines for time-based operations"
+    - "Communicate between layers via static events, not direct references"
+    - "Keep InGame (game mechanics) and OutGame (business logic) separated"
+
+# Documentation
+documentation:
+  style: "None"
+  required_for: []
+
+# Performance Considerations
+performance:
+  optimization_level: "balanced"
+  focus_areas:
+    - "garbage collection reduction"
+    - "object pooling"
+    - "event-driven updates over polling"
+
+# Git Integration
+git:
+  ignore_generated: true
+  auto_commit_message_style: "conventional"
+
+# Custom Instructions
+custom_instructions: |
+  When reviewing code for PlanetCrasher:
+  1. Verify 3-tier architecture compliance for OutGame features (Repository → Domain → Manager)
+  2. Check that InGame and OutGame layers communicate through static events, not tight coupling
+  3. Ensure MetaData (ScriptableObject) and Runtime data (Domain Object) are properly separated
+  4. Verify readonly struct usage for Value Objects
+  5. Check proper event subscription/unsubscription lifecycle
+  6. Ensure new UpgradeContent inherits from UpgradeContent base class
+  7. Verify IFeedback implementations are attached as Planet/Asteroid children
+  8. All reviews and summaries must be written in Korean (한국어)
