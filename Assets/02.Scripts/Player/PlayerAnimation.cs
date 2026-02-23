@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class PlayerAnimation : MonoBehaviour
@@ -10,8 +11,11 @@ public class PlayerAnimation : MonoBehaviour
     private PlayerStat _stat;
     private EPlayerAttack _nextAttack;
 
+    private bool _isMine;
     private void Awake()
     {
+        PhotonView view = gameObject.GetComponent<PhotonView>();
+        _isMine = view.IsMine;
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
         _stat = GetComponent<PlayerStat>();
@@ -25,6 +29,7 @@ public class PlayerAnimation : MonoBehaviour
 
     private void Update()
     {
+        if (!_isMine) return;
         UpdateAnimation();
     }
     
@@ -45,6 +50,7 @@ public class PlayerAnimation : MonoBehaviour
 
     private void OnAttack()
     {
+        if (!_isMine) return;
         EPlayerAttack attack = GetRandomAttack();
         if (_animator.GetInteger(_attackIndex) != (int)EPlayerAttack.None)
         {
@@ -57,6 +63,7 @@ public class PlayerAnimation : MonoBehaviour
 
     private void OnAttackEnd()
     {
+        if (!_isMine) return;
         if (_nextAttack != EPlayerAttack.None)
         {
             _animator.SetInteger(_attackIndex, (int)_nextAttack);

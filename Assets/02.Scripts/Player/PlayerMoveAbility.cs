@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class PlayerMoveAbility : MonoBehaviour
@@ -7,6 +8,7 @@ public class PlayerMoveAbility : MonoBehaviour
 
     private CharacterController _characterController;
     private PlayerStat _stat;
+    private bool _isMine;
 
     private void Awake()
     {
@@ -16,11 +18,14 @@ public class PlayerMoveAbility : MonoBehaviour
     
     private void Start()
     {
+        PhotonView view = gameObject.GetComponent<PhotonView>();
+        _isMine = view.IsMine;
         _yVelocity = 0f;
     }
 
     private void Update()
     {
+        if (!_isMine) return;
         Vector3 movement = GetMovement();
         UpdateJump();
 

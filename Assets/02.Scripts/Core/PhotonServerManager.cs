@@ -7,10 +7,16 @@ public class PhotonServerManager : MonoBehaviourPunCallbacks
 {
     private string _version = "0.0.1";
     private string _nickname = "MyNickname";
+    
     private void Start()
     {
+        _nickname = $"_{UnityEngine.Random.Range(100, 999)}";
+        
         PhotonNetwork.GameVersion = _version;
         PhotonNetwork.NickName = _nickname;
+
+        PhotonNetwork.SendRate = 30;            // 얼마나 자주 데이터를 송수신할 것인가 (초당 N번)
+        PhotonNetwork.SerializationRate = 30;   // 얼마나 자주 데이터를 직렬화 할 것인지. (송수신 준비)
         
         PhotonNetwork.AutomaticallySyncScene = true;
         
@@ -36,17 +42,22 @@ public class PhotonServerManager : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRandomRoom();
     }
 
+    // 방 입장에 성공하면 자동으로 호출되는 콜백 함수
     public override void OnJoinedRoom()
     {
         Debug.Log("룸 입장 완료!");
-        Debug.Log($"{PhotonNetwork.CurrentRoom.Name}");
-        Debug.Log($"{PhotonNetwork.CurrentRoom.PlayerCount}");
-        
+
+        Debug.Log($"룸: {PhotonNetwork.CurrentRoom.Name}");
+        Debug.Log($"플레이어 인원: {PhotonNetwork.CurrentRoom.PlayerCount}");
+
+        // 룸에 입장한 플레이어 정보
         Dictionary<int, Player> roomPlayers = PhotonNetwork.CurrentRoom.Players;
-        foreach (var player in roomPlayers)
+        foreach (KeyValuePair<int, Player> player in roomPlayers)
         {
-            Debug.Log($"{player.Value.NickName}: {player.Value.ActorNumber}");
+            Debug.Log($"{player.Value.NickName} : {player.Value.ActorNumber}");
         }
+        
+        PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
