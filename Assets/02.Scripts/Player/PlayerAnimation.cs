@@ -18,6 +18,11 @@ public class PlayerAnimation : MonoBehaviour
         PlayerAttackAbility.OnAttack += OnAttack;
     }
 
+    private void OnDestroy()
+    {
+        PlayerAttackAbility.OnAttack -= OnAttack;
+    }
+
     private void Update()
     {
         UpdateAnimation();
@@ -25,12 +30,9 @@ public class PlayerAnimation : MonoBehaviour
     
     private void UpdateAnimation()
     {
-        float speed = new Vector3
-        (
-            _characterController.velocity.x,
-            0,
-            _characterController.velocity.z
-        ).magnitude;
+        Vector3 velocity = _characterController.velocity;
+        velocity.y = 0;
+        float speed = velocity.magnitude;
 
         float normalizedSpeed = speed / _stat.MoveSpeed;
         _animator.SetFloat(_moveSpeed, normalizedSpeed);

@@ -39,9 +39,9 @@ public class PlayerMoveAbility : MonoBehaviour
 
     private void UpdateJump()
     {
-        if (Input.GetKey(KeyCode.Space) && _characterController.isGrounded)
+        if (_characterController.isGrounded)
         {
-            _yVelocity = _stat.JumpForce;
+            _yVelocity = Input.GetKey(KeyCode.Space) ? _stat.JumpForce : -1f;
         }
         _yVelocity -= GRAVITY * Time.deltaTime;
     }
