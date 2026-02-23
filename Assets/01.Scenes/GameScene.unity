@@ -16026,7 +16026,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7851032350907217119}
-  m_LocalEulerAnglesHint: {x: -2.1964967, y: 11.782451, z: 10.948455}
+  m_LocalEulerAnglesHint: {x: -1.5785052, y: 8.907952, z: 19.398565}
 --- !u!137 &599704593627861076
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -16368,7 +16368,7 @@ Transform:
   m_Children:
   - {fileID: 8426326842145034709}
   m_Father: {fileID: 6384459107806622842}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -11.370483}
+  m_LocalEulerAnglesHint: {x: 3.7214882, y: -4.706737, z: 1.105084}
 --- !u!1 &1421597374780545960
 GameObject:
   m_ObjectHideFlags: 0
@@ -17913,7 +17913,7 @@ Transform:
   m_Children:
   - {fileID: 1325434871019037549}
   m_Father: {fileID: 4363954898326585669}
-  m_LocalEulerAnglesHint: {x: 9.761213e-15, y: 180, z: -55.364994}
+  m_LocalEulerAnglesHint: {x: 2.9048777, y: 170.79657, z: -31.173405}
 --- !u!1 &6388992949286842676
 GameObject:
   m_ObjectHideFlags: 0
@@ -18058,7 +18058,7 @@ Transform:
   m_Children:
   - {fileID: 8933686868683493172}
   m_Father: {fileID: 4363954898326585669}
-  m_LocalEulerAnglesHint: {x: 4.7730083, y: -90, z: 0}
+  m_LocalEulerAnglesHint: {x: 4.773009, y: -90, z: 0}
 --- !u!33 &6862849367732582184
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -18308,6 +18308,7 @@ GameObject:
   - component: {fileID: 7647134206596562490}
   - component: {fileID: 7647134206596562491}
   - component: {fileID: 7647134206596562492}
+  - component: {fileID: 7647134206596562493}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -18356,6 +18357,18 @@ MonoBehaviour:
   MoveSpeed: 12
   JumpForce: 5
   AttackPower: 10
+--- !u!114 &7647134206596562493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7647134206596562489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 191a0bee5887a8341bb5ec310c052041, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAttackAbility
 --- !u!1 &7667767699073697520
 GameObject:
   m_ObjectHideFlags: 0
@@ -18557,7 +18570,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1325434871019037549}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 1.0190457}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 4.359429}
 --- !u!4 &8514510132529751338
 Transform:
   m_ObjectHideFlags: 0
@@ -18621,7 +18634,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4162364862996871777}
-  m_LocalEulerAnglesHint: {x: 0.42201567, y: -167.90097, z: 170.49869}
+  m_LocalEulerAnglesHint: {x: 31.23236, y: 162.76396, z: 107.348564}
 --- !u!4 &8716385945016852442
 Transform:
   m_ObjectHideFlags: 0
