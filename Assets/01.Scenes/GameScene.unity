@@ -6514,9 +6514,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74e0f6eb1625efe409fe12bfbf8a8118, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMoveAbility
-  MoveSpeed: 7
-  JumpForce: 10
-  RotationSpeed: 10
 --- !u!1001 &888368868
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -18309,6 +18306,8 @@ GameObject:
   - component: {fileID: 6979419723797584955}
   - component: {fileID: 884739993}
   - component: {fileID: 7647134206596562490}
+  - component: {fileID: 7647134206596562491}
+  - component: {fileID: 7647134206596562492}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -18330,6 +18329,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerRotatieAbillity
   CameraRoot: {fileID: 518177413}
   RotationSpeed: 100
+--- !u!114 &7647134206596562491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7647134206596562489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8476b7ab71625540a1bebf4aa193657, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimation
+--- !u!114 &7647134206596562492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7647134206596562489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8258082fb86b1f4799b1b64a65c59ce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerStat
+  MoveSpeed: 12
+  JumpForce: 5
+  AttackPower: 10
 --- !u!1 &7667767699073697520
 GameObject:
   m_ObjectHideFlags: 0

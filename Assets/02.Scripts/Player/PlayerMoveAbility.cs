@@ -2,18 +2,16 @@ using UnityEngine;
 
 public class PlayerMoveAbility : MonoBehaviour
 {
-    public float MoveSpeed = 7f;
-    public float JumpForce = 2.5f;
-    public float RotationSpeed = 10f;
-
     private const float GRAVITY = 30.0f;
     private float _yVelocity = 0f;
-    
+
     private CharacterController _characterController;
+    private PlayerStat _stat;
 
     private void Awake()
     {
         _characterController = GetComponent<CharacterController>();
+        _stat = GetComponent<PlayerStat>();
     }
     
     private void Start()
@@ -36,14 +34,14 @@ public class PlayerMoveAbility : MonoBehaviour
         float v = Input.GetAxis("Vertical");
 
         Vector3 movement = new Vector3(h, 0, v);
-        return transform.TransformDirection(movement) * MoveSpeed;
+        return transform.TransformDirection(movement) * _stat.MoveSpeed;
     }
 
     private void UpdateJump()
     {
         if (Input.GetKey(KeyCode.Space) && _characterController.isGrounded)
         {
-            _yVelocity = JumpForce;
+            _yVelocity = _stat.JumpForce;
         }
         _yVelocity -= GRAVITY * Time.deltaTime;
     }
