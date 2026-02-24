@@ -1936,9 +1936,11 @@ MonoBehaviour:
   Stat:
     MoveSpeed: 10
     RunSpeed: 20
-    JumpPower: 5
+    JumpPower: 10
+    JumpStaminaUsage: 5
     RotationSpeed: 100
     AttackSpeed: 1.5
+    AttackStaminaUsage: 10
     RunStaminaUsage: 10
     _stamina:
       _current: 100

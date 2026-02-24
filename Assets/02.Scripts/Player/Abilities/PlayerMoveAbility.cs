@@ -62,7 +62,8 @@ public class PlayerMoveAbility : PlayerAbility
     {
         if (_characterController.isGrounded)
         {
-            _yVelocity = Input.GetKey(KeyCode.Space) ? _owner.Stat.JumpPower : -1f;
+            bool canJump = Input.GetKeyDown(KeyCode.Space) && _owner.TryUseStamina(_owner.Stat.JumpStaminaUsage);
+            _yVelocity = canJump ? _owner.Stat.JumpPower : -1f;
         }
         _yVelocity -= GRAVITY * Time.deltaTime;
     }

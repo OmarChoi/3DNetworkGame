@@ -64,6 +64,19 @@ public class PlayerController : MonoBehaviour, IPunObservable
         NotifyStatChanged();
     }
 
+    public bool TryUseStamina(float amount)
+    {
+        EnsureStat();
+        float before = Stat.Stamina.Current;
+        bool success = Stat.TryUseStamina(amount);
+        if (success && !Mathf.Approximately(before, Stat.Stamina.Current))
+        {
+            NotifyStatChanged();
+        }
+
+        return success;
+    }
+
     private void EnsureStat()
     {
         Stat ??= new PlayerStat();
