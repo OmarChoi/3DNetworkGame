@@ -1,20 +1,21 @@
+using Photon.Pun;
 using UnityEngine;
 
-public class PlayerAnimation : MonoBehaviour
+public class PlayerAnimationAbility : PlayerAbility
 {
     private static readonly int _moveSpeed = Animator.StringToHash("MoveSpeed");
     private static readonly int _attackIndex = Animator.StringToHash("AttackIndex");
 
     private CharacterController _characterController;
     private Animator _animator;
-    private PlayerStat _stat;
     private EPlayerAttack _nextAttack;
 
-    private void Awake()
+    private bool _isMine;
+    protected override void Awake()
     {
+        base.Awake();
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
-        _stat = GetComponent<PlayerStat>();
         PlayerAttackAbility.OnAttack += OnAttack;
     }
 
@@ -25,6 +26,7 @@ public class PlayerAnimation : MonoBehaviour
 
     private void Update()
     {
+        if (!_owner.PhotonView.IsMine) return;
         UpdateAnimation();
     }
     
@@ -34,7 +36,7 @@ public class PlayerAnimation : MonoBehaviour
         velocity.y = 0;
         float speed = velocity.magnitude;
 
-        float normalizedSpeed = speed / _stat.MoveSpeed;
+        float normalizedSpeed = speed / _owner.Stat.MoveSpeed;
         _animator.SetFloat(_moveSpeed, normalizedSpeed);
     }
 
@@ -45,6 +47,7 @@ public class PlayerAnimation : MonoBehaviour
 
     private void OnAttack()
     {
+        if (!_owner.PhotonView.IsMine) return;
         EPlayerAttack attack = GetRandomAttack();
         if (_animator.GetInteger(_attackIndex) != (int)EPlayerAttack.None)
         {
@@ -57,6 +60,7 @@ public class PlayerAnimation : MonoBehaviour
 
     private void OnAttackEnd()
     {
+        if (!_owner.PhotonView.IsMine) return;
         if (_nextAttack != EPlayerAttack.None)
         {
             _animator.SetInteger(_attackIndex, (int)_nextAttack);

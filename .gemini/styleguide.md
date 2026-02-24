@@ -163,8 +163,9 @@ manager.GetEffectValue(type);
 ## 3.1 네이밍 컨벤션
 
 | 대상               | 규칙                     |
-| ---------------- | ---------------------- |
+|------------------| ---------------------- |
 | Private 필드       | `_camelCase`           |
+| Protected 필드     | `_camelCase`           |
 | SerializeField   | `_camelCase`           |
 | Public 속성        | PascalCase             |
 | 메서드              | PascalCase             |
