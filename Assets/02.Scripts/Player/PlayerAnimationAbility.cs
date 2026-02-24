@@ -1,7 +1,6 @@
 using Photon.Pun;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerController))]
 public class PlayerAnimationAbility : PlayerAbility
 {
     private static readonly int _moveSpeed = Animator.StringToHash("MoveSpeed");
@@ -9,7 +8,6 @@ public class PlayerAnimationAbility : PlayerAbility
 
     private CharacterController _characterController;
     private Animator _animator;
-    private PlayerStat _stat;
     private EPlayerAttack _nextAttack;
 
     private bool _isMine;
@@ -18,7 +16,6 @@ public class PlayerAnimationAbility : PlayerAbility
         base.Awake();
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
-        _stat = GetComponent<PlayerController>().Stat;
         PlayerAttackAbility.OnAttack += OnAttack;
     }
 
@@ -39,7 +36,7 @@ public class PlayerAnimationAbility : PlayerAbility
         velocity.y = 0;
         float speed = velocity.magnitude;
 
-        float normalizedSpeed = speed / _stat.MoveSpeed;
+        float normalizedSpeed = speed / _owner.Stat.MoveSpeed;
         _animator.SetFloat(_moveSpeed, normalizedSpeed);
     }
 

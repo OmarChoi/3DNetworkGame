@@ -1,13 +1,11 @@
 using Photon.Pun;
 using UnityEngine;
 
-[RequireComponent(typeof(PlayerController))]
 public class PlayerMoveAbility : PlayerAbility
 {
     private const float GRAVITY = 30.0f;
     private float _yVelocity = 0f;
     
-    private PlayerStat _stat;
     private CharacterController _characterController;
     private bool _isMine;
 
@@ -15,7 +13,6 @@ public class PlayerMoveAbility : PlayerAbility
     {
         base.Awake();
         _characterController = GetComponent<CharacterController>();
-        _stat = GetComponent<PlayerController>().Stat;
     }
     
     private void Start()
@@ -39,14 +36,14 @@ public class PlayerMoveAbility : PlayerAbility
         float v = Input.GetAxis("Vertical");
 
         Vector3 movement = new Vector3(h, 0, v);
-        return transform.TransformDirection(movement) * _stat.MoveSpeed;
+        return transform.TransformDirection(movement) * _owner.Stat.MoveSpeed;
     }
 
     private void UpdateJump()
     {
         if (_characterController.isGrounded)
         {
-            _yVelocity = Input.GetKey(KeyCode.Space) ? _stat.JumpPower : -1f;
+            _yVelocity = Input.GetKey(KeyCode.Space) ? _owner.Stat.JumpPower : -1f;
         }
         _yVelocity -= GRAVITY * Time.deltaTime;
     }
