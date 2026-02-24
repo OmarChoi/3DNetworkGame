@@ -1,31 +1,31 @@
 using Photon.Pun;
 using UnityEngine;
 
-public class PlayerMoveAbility : MonoBehaviour
+[RequireComponent(typeof(PlayerController))]
+public class PlayerMoveAbility : PlayerAbility
 {
     private const float GRAVITY = 30.0f;
     private float _yVelocity = 0f;
-
-    private CharacterController _characterController;
+    
     private PlayerStat _stat;
+    private CharacterController _characterController;
     private bool _isMine;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _characterController = GetComponent<CharacterController>();
-        _stat = GetComponent<PlayerStat>();
+        _stat = GetComponent<PlayerController>().Stat;
     }
     
     private void Start()
     {
-        PhotonView view = gameObject.GetComponent<PhotonView>();
-        _isMine = view.IsMine;
         _yVelocity = 0f;
     }
 
     private void Update()
     {
-        if (!_isMine) return;
+        if (!_owner.PhotonView.IsMine) return;
         Vector3 movement = GetMovement();
         UpdateJump();
 
@@ -46,7 +46,7 @@ public class PlayerMoveAbility : MonoBehaviour
     {
         if (_characterController.isGrounded)
         {
-            _yVelocity = Input.GetKey(KeyCode.Space) ? _stat.JumpForce : -1f;
+            _yVelocity = Input.GetKey(KeyCode.Space) ? _stat.JumpPower : -1f;
         }
         _yVelocity -= GRAVITY * Time.deltaTime;
     }

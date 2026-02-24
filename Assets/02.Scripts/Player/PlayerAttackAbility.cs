@@ -2,20 +2,18 @@ using System;
 using Photon.Pun;
 using UnityEngine;
 
-public class PlayerAttackAbility : MonoBehaviour
+public class PlayerAttackAbility : PlayerAbility
 {
     public static Action OnAttack;
-    private bool _isMine = true;
-
+    
     private void Start()
     {
-        PhotonView view = gameObject.GetComponent<PhotonView>();
-        _isMine = view.IsMine;
+        if (!_owner.PhotonView.IsMine) return;
     }
     
     private void Update()
     {
-        if (!_isMine) return;
+        if (!_owner.PhotonView.IsMine) return;
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             OnAttack?.Invoke();

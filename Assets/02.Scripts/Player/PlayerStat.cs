@@ -1,9 +1,10 @@
-using UnityEngine;
+using System;
 
-public class PlayerStat : MonoBehaviour
+[Serializable]
+public class PlayerStat
 {
-    // todo. Scriptable Object로 변환
-    public float MoveSpeed = 7f;
-    public float JumpForce = 2.5f;
-    public float AttackPower = 10f;
+    public float MoveSpeed;
+    public float JumpPower;
+    public float RotationSpeed;
+    public float AttackSpeed;
 }

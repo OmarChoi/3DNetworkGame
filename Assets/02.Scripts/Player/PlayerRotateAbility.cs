@@ -2,7 +2,7 @@ using Photon.Pun;
 using Unity.Cinemachine;
 using UnityEngine;
 
-public class PlayerRotateAbility : MonoBehaviour
+public class PlayerRotateAbility : PlayerAbility
 {
     [SerializeField] private Transform _cameraRoot;
     [SerializeField] private float _rotationSpeed = 100f;
@@ -13,8 +13,7 @@ public class PlayerRotateAbility : MonoBehaviour
 
     private void Start()
     {
-        PhotonView view = gameObject.GetComponent<PhotonView>();
-        _isMine = view.IsMine;
+        if (!_owner.PhotonView.IsMine) return;
         Cursor.lockState = CursorLockMode.Locked;
         CinemachineCamera vcam = GameObject.Find("FollowCamera").GetComponent<CinemachineCamera>();
         vcam.Follow = _cameraRoot.transform;
@@ -22,7 +21,7 @@ public class PlayerRotateAbility : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (!_isMine) return;
+        if (!_owner.PhotonView.IsMine) return;
         UpdateRotation();
     }
 
