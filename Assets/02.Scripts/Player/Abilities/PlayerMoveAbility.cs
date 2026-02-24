@@ -44,7 +44,7 @@ public class PlayerMoveAbility : PlayerAbility
         }
         else
         {
-            _owner.AddStamina(runStaminaUsage * Time.deltaTime);
+            _owner.AddStamina(_owner.Stat.StaminaRecovery * Time.deltaTime);
             return false;
         }
     }

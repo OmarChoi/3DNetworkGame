@@ -9,7 +9,8 @@ public class PlayerStat
     public float JumpPower;
     public float JumpStaminaUsage;
     public float RotationSpeed;
-    public float AttackSpeed;
+    
+    public float StaminaRecovery;
     public float AttackStaminaUsage;
     public float RunStaminaUsage;
 
