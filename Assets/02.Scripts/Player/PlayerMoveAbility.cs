@@ -26,17 +26,36 @@ public class PlayerMoveAbility : PlayerAbility
         Vector3 movement = GetMovement();
         UpdateJump();
 
+        bool isRunning = CheckRun();
+        float moveSpeed = isRunning ? _owner.Stat.RunSpeed : _owner.Stat.MoveSpeed;
+        movement *= moveSpeed;
         movement.y = _yVelocity;
         _characterController.Move(movement * Time.deltaTime);
     }
 
+    private bool CheckRun()
+    {
+        if (Input.GetKey(KeyCode.LeftShift) && _owner.Stat.Stamina > _owner.Stat.RunStaminaUsage)
+        {
+            _owner.Stat.Stamina -= _owner.Stat.RunStaminaUsage * Time.deltaTime;
+            _owner.Stat.Stamina = Mathf.Clamp(_owner.Stat.Stamina, 0, _owner.Stat.MaxStamina);
+            return true;
+        }
+        else
+        {
+            _owner.Stat.Stamina += _owner.Stat.RunStaminaUsage * Time.deltaTime;
+            _owner.Stat.Stamina = Mathf.Clamp(_owner.Stat.Stamina, 0, _owner.Stat.MaxStamina);
+            return false;
+        }
+    }
+    
     private Vector3 GetMovement()
     {
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
 
         Vector3 movement = new Vector3(h, 0, v);
-        return transform.TransformDirection(movement) * _owner.Stat.MoveSpeed;
+        return Camera.main.transform.TransformDirection(movement);
     }
 
     private void UpdateJump()

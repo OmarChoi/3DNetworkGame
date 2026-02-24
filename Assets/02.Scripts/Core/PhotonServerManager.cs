@@ -68,11 +68,13 @@ public class PhotonServerManager : MonoBehaviourPunCallbacks
         // 랜덤 룸 입장에 실패하면 룸이 하나도 없는 것이니 룸을 만들자!
         
         // 룸 옵션 정의
-        RoomOptions roomOptions = new RoomOptions();
-        roomOptions.MaxPlayers = 20;    // 룸 최대 접속자 수
-        roomOptions.IsVisible = true;   // 로비에서 룸을 보여줄 것인지
-        roomOptions.IsOpen = true;      // 룸의 오픈여부
-        
+        var roomOptions = new RoomOptions
+        {
+            MaxPlayers = 20, // 룸 최대 접속자 수
+            IsVisible = true, // 로비에서 룸을 보여줄 것인지
+            IsOpen = true // 룸의 오픈여부
+        };
+
         // 룸 만들기
         PhotonNetwork.CreateRoom("NewGame", roomOptions);
     }

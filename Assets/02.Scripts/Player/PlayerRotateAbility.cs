@@ -7,19 +7,18 @@ public class PlayerRotateAbility : PlayerAbility
     private float _my;
     private float _mx;
 
-    private PlayerStat _stat;
-    private bool _isMine;
-
     private void Start()
     {
         if (!_owner.PhotonView.IsMine) return;
         Cursor.lockState = CursorLockMode.Locked;
+        
         CinemachineCamera vcam = GameObject.Find("FollowCamera").GetComponent<CinemachineCamera>();
         vcam.Follow = _cameraRoot.transform;
     }
 
-    private void LateUpdate()
+    private void Update()
     {
+        if (!_owner.PhotonView.IsMine) return;
         UpdateRotation();
     }
 
@@ -27,10 +26,11 @@ public class PlayerRotateAbility : PlayerAbility
     {
         if (!_owner.PhotonView.IsMine) return;
         _mx += Input.GetAxis("Mouse X") * _owner.Stat.RotationSpeed * Time.deltaTime;
-        _my -= Input.GetAxis("Mouse Y") * _owner.Stat.RotationSpeed * Time.deltaTime;
+        _my += Input.GetAxis("Mouse Y") * _owner.Stat.RotationSpeed * Time.deltaTime;
+        
         _my = Mathf.Clamp(_my, -90f, 90f);
-
+        
         transform.eulerAngles    = new Vector3(0f, _mx, 0f);
-        _cameraRoot.localRotation = Quaternion.Euler(_my, 0f, 0f);
+        _cameraRoot.localRotation = Quaternion.Euler(-_my, 0f, 0f);
     }
 }

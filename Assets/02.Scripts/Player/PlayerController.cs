@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IPunObservable
 {
     public PhotonView PhotonView;
     public PlayerStat Stat;
@@ -36,5 +36,19 @@ public class PlayerController : MonoBehaviour
         }
         
         throw new Exception($"어빌리티 {type.Name}을 {gameObject.name}에서 찾을 수 없습니다.");
+    }
+    
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(Stat.Health);
+            stream.SendNext(Stat.Stamina);
+        }
+        else if (stream.IsReading)
+        {
+            Stat.Health  = (float)stream.ReceiveNext();
+            Stat.Stamina = (float)stream.ReceiveNext();
+        }
     }
 }
