@@ -113,6 +113,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IPunObservable
         }
     }
     
+    [PunRPC]
     public void TakeDamage(float damage)
     {
         Debug.Log("TakeDamage");
