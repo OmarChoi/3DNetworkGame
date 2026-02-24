@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour, IPunObservable
+public class PlayerController : MonoBehaviour, IDamageable, IPunObservable
 {
     public PhotonView PhotonView { get; private set; }
     public PlayerStat Stat;
@@ -111,5 +111,11 @@ public class PlayerController : MonoBehaviour, IPunObservable
                 NotifyStatChanged();
             }
         }
+    }
+    
+    public void TakeDamage(float damage)
+    {
+        Debug.Log("TakeDamage");
+        SetHealth(Stat.Health.Current - damage);
     }
 }

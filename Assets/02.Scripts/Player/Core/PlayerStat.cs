@@ -7,13 +7,15 @@ public class PlayerStat
     public float MoveSpeed;
     public float RunSpeed;
     public float JumpPower;
-    public float JumpStaminaUsage;
     public float RotationSpeed;
     
     public float StaminaRecovery;
+    public float JumpStaminaUsage;
     public float AttackStaminaUsage;
     public float RunStaminaUsage;
 
+    public float Damage;
+    
     [SerializeField] private ResourceValue _stamina = new ResourceValue();
     [SerializeField] private ResourceValue _health = new ResourceValue();
 
