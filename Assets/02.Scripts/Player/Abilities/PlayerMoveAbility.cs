@@ -35,16 +35,16 @@ public class PlayerMoveAbility : PlayerAbility
 
     private bool CheckRun()
     {
-        if (Input.GetKey(KeyCode.LeftShift) && _owner.Stat.Stamina > _owner.Stat.RunStaminaUsage)
+        float runStaminaUsage = _owner.Stat.RunStaminaUsage;
+
+        if (Input.GetKey(KeyCode.LeftShift) && _owner.Stat.Stamina.Current > runStaminaUsage)
         {
-            _owner.Stat.Stamina -= _owner.Stat.RunStaminaUsage * Time.deltaTime;
-            _owner.Stat.Stamina = Mathf.Clamp(_owner.Stat.Stamina, 0, _owner.Stat.MaxStamina);
+            _owner.AddStamina(-runStaminaUsage *  Time.deltaTime);
             return true;
         }
         else
         {
-            _owner.Stat.Stamina += _owner.Stat.RunStaminaUsage * Time.deltaTime;
-            _owner.Stat.Stamina = Mathf.Clamp(_owner.Stat.Stamina, 0, _owner.Stat.MaxStamina);
+            _owner.AddStamina(runStaminaUsage * Time.deltaTime);
             return false;
         }
     }

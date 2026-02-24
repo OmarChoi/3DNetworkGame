@@ -1933,18 +1933,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df950b355f2240f2bc0205bb37b6ac6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  PhotonView: {fileID: 0}
   Stat:
     MoveSpeed: 10
     RunSpeed: 20
     JumpPower: 5
     RotationSpeed: 100
     AttackSpeed: 1.5
-    Stamina: 100
-    MaxStamina: 100
     RunStaminaUsage: 10
-    Health: 100
-    MaxHealth: 100
+    _stamina:
+      _current: 100
+      _max: 100
+    _health:
+      _current: 100
+      _max: 100
 --- !u!114 &8262879569410011466
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2400,6 +2400,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9c12e06a4e19174bb0c2c29d1f70c0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PhotonServerManager
+  _playerPrefab: {fileID: 5682260818812606338, guid: 501b51dda3d765d4388e10e388904ef6, type: 3}
 --- !u!4 &238181232
 Transform:
   m_ObjectHideFlags: 0

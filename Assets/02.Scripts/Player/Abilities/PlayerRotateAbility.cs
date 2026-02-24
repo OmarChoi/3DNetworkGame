@@ -30,7 +30,7 @@ public class PlayerRotateAbility : PlayerAbility
         
         _my = Mathf.Clamp(_my, -90f, 90f);
         
-        transform.eulerAngles    = new Vector3(0f, _mx, 0f);
+        transform.rotation = Quaternion.Euler(0f, _mx, 0f);
         _cameraRoot.localRotation = Quaternion.Euler(-_my, 0f, 0f);
     }
 }

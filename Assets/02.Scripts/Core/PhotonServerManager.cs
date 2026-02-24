@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PhotonServerManager : MonoBehaviourPunCallbacks
 {
+    [SerializeField] private GameObject _playerPrefab;
+    
     private string _version = "0.0.1";
     private string _nickname = "MyNickname";
     
@@ -57,7 +59,7 @@ public class PhotonServerManager : MonoBehaviourPunCallbacks
             Debug.Log($"{player.Value.NickName} : {player.Value.ActorNumber}");
         }
         
-        PhotonNetwork.Instantiate("Player", Vector3.zero, Quaternion.identity);
+        PhotonNetwork.Instantiate(_playerPrefab.name, Vector3.zero, Quaternion.identity);
     }
 
     public override void OnJoinRandomFailed(short returnCode, string message)
