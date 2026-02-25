@@ -41,8 +41,8 @@ MonoBehaviour:
   - RespawnSpaceship
   - RpcPlayAttack
   - RpcResetAttack
-  - TakeDamage
   - RpcPlayAttackAnimation
+  - TakeDamageRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
