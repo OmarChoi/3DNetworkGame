@@ -6,12 +6,21 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour, IDamageable, IPunObservable
 {
     public PhotonView PhotonView { get; private set; }
+    public CharacterController Controller { get; private set; }
+
+    private Renderer[] _renderers;
     public PlayerStat Stat;
     public event Action<PlayerStat> OnStatChanged;
+    public event Action OnDeath;
+    public event Action OnReset;
+
+    public bool IsDead => Stat.Health.Current <= 0f;
 
     private void Awake()
     {
         PhotonView = GetComponent<PhotonView>();
+        Controller = GetComponent<CharacterController>();
+        _renderers = GetComponentsInChildren<Renderer>();
         EnsureStat();
     }
 
@@ -48,6 +57,15 @@ public class PlayerController : MonoBehaviour, IDamageable, IPunObservable
         EnsureStat();
         if (!Stat.SetHealth(health)) return;
         NotifyStatChanged();
+
+        if (IsDead)
+        {
+            OnDeath?.Invoke();
+            if (PhotonView.IsMine)
+            {
+                CharacterSpawner.Instance.StartRespawn(this);
+            }
+        }
     }
 
     public void SetStamina(float stamina)
@@ -113,8 +131,48 @@ public class PlayerController : MonoBehaviour, IDamageable, IPunObservable
         }
     }
     
+    public void SetVisible(bool visible)
+    {
+        foreach (var rd in _renderers)
+        {
+            rd.enabled = visible;
+        }
+        if (Controller != null) Controller.enabled = visible;
+    }
+    
+    public void Teleport(Vector3 position)
+    {
+        if (Controller != null) Controller.enabled = false;
+        transform.position = position;
+        if (Controller != null) Controller.enabled = true;
+    }
+
+    public void ResetPlayer(Vector3 spawnPosition)
+    {
+        PhotonView.RPC(nameof(RespawnRPC), RpcTarget.All, spawnPosition);
+    }
+
+    [PunRPC]
+    private void RespawnRPC(Vector3 spawnPosition)
+    {
+        SetVisible(false);
+        Teleport(spawnPosition);
+
+        if (PhotonView.IsMine)
+        {
+            EnsureStat();
+            Stat.Health.Reset();
+            Stat.Stamina.Reset();
+            NotifyStatChanged();
+        }
+
+        SetVisible(true);
+        OnReset?.Invoke();
+    }
+
     public void TakeDamage(float damage)
     {
+        if (IsDead) return;
         PhotonView.RPC(nameof(TakeDamageRPC), RpcTarget.All, damage);
     }
 

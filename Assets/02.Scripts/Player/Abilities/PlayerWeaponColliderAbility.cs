@@ -8,7 +8,7 @@ public class PlayerWeaponColliderAbility : PlayerAbility
     {
         DeActiveCollider();
     }
-    
+
     public void ActiveCollider()
     {
         Debug.Log("Activate collider");

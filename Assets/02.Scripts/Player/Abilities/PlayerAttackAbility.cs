@@ -22,6 +22,7 @@ public class PlayerAttackAbility : PlayerAbility
     private void Update()
     {
         if (!_owner.PhotonView.IsMine) return;
+        if (_owner.IsDead) return;
         if (_isAttacking) return;
         if (Input.GetKeyDown(KeyCode.Mouse0) && _owner.TryUseStamina(_owner.Stat.AttackStaminaUsage))
         {

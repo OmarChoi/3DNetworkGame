@@ -28,4 +28,9 @@ public class ResourceValue
     {
         _current = Mathf.Clamp(_current, 0f, _max);
     }
+
+    public void Reset()
+    {
+        _current = _max;
+    }
 }

@@ -6,13 +6,12 @@ public class PlayerMoveAbility : PlayerAbility
     private const float GRAVITY = 30.0f;
     private float _yVelocity = 0f;
     
-    private CharacterController _characterController;
-    private bool _isMine;
+    private CharacterController _controller;
 
     protected override void Awake()
     {
         base.Awake();
-        _characterController = GetComponent<CharacterController>();
+        _controller = _owner.Controller;
     }
     
     private void Start()
@@ -23,6 +22,7 @@ public class PlayerMoveAbility : PlayerAbility
     private void Update()
     {
         if (!_owner.PhotonView.IsMine) return;
+        if (_owner.IsDead) return;
         Vector3 movement = GetMovement();
         UpdateJump();
 
@@ -30,7 +30,7 @@ public class PlayerMoveAbility : PlayerAbility
         float moveSpeed = isRunning ? _owner.Stat.RunSpeed : _owner.Stat.MoveSpeed;
         movement *= moveSpeed;
         movement.y = _yVelocity;
-        _characterController.Move(movement * Time.deltaTime);
+        _controller.Move(movement * Time.deltaTime);
     }
 
     private bool CheckRun()
@@ -60,7 +60,7 @@ public class PlayerMoveAbility : PlayerAbility
 
     private void UpdateJump()
     {
-        if (_characterController.isGrounded)
+        if (_controller.isGrounded)
         {
             bool canJump = Input.GetKeyDown(KeyCode.Space) && _owner.TryUseStamina(_owner.Stat.JumpStaminaUsage);
             _yVelocity = canJump ? _owner.Stat.JumpPower : -1f;

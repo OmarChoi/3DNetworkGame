@@ -10,6 +10,7 @@ public class PlayerAnimationAbility : PlayerAbility
     private static readonly int _attack1Trigger = Animator.StringToHash("Attack1Trigger");
     private static readonly int _attack2Trigger = Animator.StringToHash("Attack2Trigger");
     private static readonly int _attack3Trigger = Animator.StringToHash("Attack3Trigger");
+    private static readonly int _deathTrigger = Animator.StringToHash("DeathTrigger");
 
     private CharacterController _characterController;
     private Animator _animator;
@@ -20,11 +21,15 @@ public class PlayerAnimationAbility : PlayerAbility
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
         PlayerAttackAbility.OnAttack += OnAttack;
+        _owner.OnDeath += OnDeath;
+        _owner.OnReset += OnReset;
     }
 
     private void OnDestroy()
     {
         PlayerAttackAbility.OnAttack -= OnAttack;
+        _owner.OnDeath -= OnDeath;
+        _owner.OnReset -= OnReset;
     }
 
     private void Update()
@@ -78,6 +83,17 @@ public class PlayerAnimationAbility : PlayerAbility
     {
         if (_owner.PhotonView.IsMine) return;
         TriggerAttackAnimation((EPlayerAttack)attackValue);
+    }
+
+    private void OnDeath()
+    {
+        _animator.SetTrigger(_deathTrigger);
+    }
+
+    private void OnReset()
+    {
+        _animator.Rebind();
+        _animator.Update(0f);
     }
 
     private void OnAttackEnd()
