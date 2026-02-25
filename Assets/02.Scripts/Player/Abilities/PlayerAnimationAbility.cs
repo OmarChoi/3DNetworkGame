@@ -1,16 +1,19 @@
+using System;
 using Photon.Pun;
 using UnityEngine;
 
 public class PlayerAnimationAbility : PlayerAbility
 {
+    public static Action OnAttackAnimationEnd;
+
     private static readonly int _moveSpeed = Animator.StringToHash("MoveSpeed");
-    private static readonly int _attackIndex = Animator.StringToHash("AttackIndex");
+    private static readonly int _attack1Trigger = Animator.StringToHash("Attack1Trigger");
+    private static readonly int _attack2Trigger = Animator.StringToHash("Attack2Trigger");
+    private static readonly int _attack3Trigger = Animator.StringToHash("Attack3Trigger");
 
     private CharacterController _characterController;
     private Animator _animator;
-    private EPlayerAttack _nextAttack;
 
-    private bool _isMine;
     protected override void Awake()
     {
         base.Awake();
@@ -42,31 +45,44 @@ public class PlayerAnimationAbility : PlayerAbility
 
     private EPlayerAttack GetRandomAttack()
     {
-        return (EPlayerAttack)Random.Range(0, (int)EPlayerAttack.Count);
+        return (EPlayerAttack)UnityEngine.Random.Range(0, (int)EPlayerAttack.Count);
     }
 
     private void OnAttack()
     {
         if (!_owner.PhotonView.IsMine) return;
+
         EPlayerAttack attack = GetRandomAttack();
-        if (_animator.GetInteger(_attackIndex) != (int)EPlayerAttack.None)
+        TriggerAttackAnimation(attack);
+        _owner.PhotonView.RPC(nameof(RpcPlayAttackAnimation), RpcTarget.Others, (int)attack);
+    }
+
+    private void TriggerAttackAnimation(EPlayerAttack attack)
+    {
+        switch (attack)
         {
-            if (_nextAttack != EPlayerAttack.None) return;
-            _nextAttack = attack;
-            return;
+            case EPlayerAttack.Attack1:
+                _animator.SetTrigger(_attack1Trigger);
+                break;
+            case EPlayerAttack.Attack2:
+                _animator.SetTrigger(_attack2Trigger);
+                break;
+            case EPlayerAttack.Attack3:
+                _animator.SetTrigger(_attack3Trigger);
+                break;
         }
-        _animator.SetInteger(_attackIndex, (int)attack);
+    }
+
+    [PunRPC]
+    private void RpcPlayAttackAnimation(int attackValue)
+    {
+        if (_owner.PhotonView.IsMine) return;
+        TriggerAttackAnimation((EPlayerAttack)attackValue);
     }
 
     private void OnAttackEnd()
     {
         if (!_owner.PhotonView.IsMine) return;
-        if (_nextAttack != EPlayerAttack.None)
-        {
-            _animator.SetInteger(_attackIndex, (int)_nextAttack);
-            _nextAttack = EPlayerAttack.None;
-            return;
-        }
-        _animator.SetInteger(_attackIndex, (int)EPlayerAttack.None);
+        OnAttackAnimationEnd?.Invoke();
     }
 }

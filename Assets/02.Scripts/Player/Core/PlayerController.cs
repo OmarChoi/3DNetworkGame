@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour, IPunObservable
+public class PlayerController : MonoBehaviour, IDamageable, IPunObservable
 {
     public PhotonView PhotonView { get; private set; }
     public PlayerStat Stat;
@@ -64,6 +64,19 @@ public class PlayerController : MonoBehaviour, IPunObservable
         NotifyStatChanged();
     }
 
+    public bool TryUseStamina(float amount)
+    {
+        EnsureStat();
+        float before = Stat.Stamina.Current;
+        bool success = Stat.TryUseStamina(amount);
+        if (success && !Mathf.Approximately(before, Stat.Stamina.Current))
+        {
+            NotifyStatChanged();
+        }
+
+        return success;
+    }
+
     private void EnsureStat()
     {
         Stat ??= new PlayerStat();
@@ -98,5 +111,16 @@ public class PlayerController : MonoBehaviour, IPunObservable
                 NotifyStatChanged();
             }
         }
+    }
+    
+    public void TakeDamage(float damage)
+    {
+        PhotonView.RPC(nameof(TakeDamageRPC), RpcTarget.All, damage);
+    }
+
+    [PunRPC]
+    private void TakeDamageRPC(float damage)
+    {
+        SetHealth(Stat.Health.Current - damage);
     }
 }

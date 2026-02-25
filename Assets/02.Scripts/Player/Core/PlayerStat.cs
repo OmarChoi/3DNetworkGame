@@ -8,9 +8,14 @@ public class PlayerStat
     public float RunSpeed;
     public float JumpPower;
     public float RotationSpeed;
-    public float AttackSpeed;
+    
+    public float StaminaRecovery;
+    public float JumpStaminaUsage;
+    public float AttackStaminaUsage;
     public float RunStaminaUsage;
 
+    public float Damage;
+    
     [SerializeField] private ResourceValue _stamina = new ResourceValue();
     [SerializeField] private ResourceValue _health = new ResourceValue();
 
@@ -57,5 +62,22 @@ public class PlayerStat
     {
         EnsureInitialized();
         return _stamina.Add(delta);
+    }
+
+    public bool TryUseStamina(float amount)
+    {
+        EnsureInitialized();
+
+        if (amount <= 0f)
+        {
+            return true;
+        }
+
+        if (_stamina.Current < amount)
+        {
+            return false;
+        }
+
+        return _stamina.Add(-amount);
     }
 }
