@@ -11,13 +11,11 @@ public class PlayerWeaponColliderAbility : PlayerAbility
 
     public void ActiveCollider()
     {
-        Debug.Log("Activate collider");
         _collider.enabled = true;
     }
 
     public void DeActiveCollider()
     {
-        Debug.Log("Deactivate collider");
         _collider.enabled = false;
     }
 }

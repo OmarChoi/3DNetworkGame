@@ -170,15 +170,18 @@ public class PlayerController : MonoBehaviour, IDamageable, IPunObservable
         OnReset?.Invoke();
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, int actorNumber)
     {
         if (IsDead) return;
-        PhotonView.RPC(nameof(TakeDamageRPC), RpcTarget.All, damage);
+        PhotonView.RPC(nameof(TakeDamageRPC), RpcTarget.All, damage, actorNumber);
     }
 
     [PunRPC]
-    private void TakeDamageRPC(float damage)
+    private void TakeDamageRPC(float damage, int actorNumber)
     {
+        if (IsDead) return;
         SetHealth(Stat.Health.Current - damage);
+        if (!IsDead) return;
+        PhotonRoomManager.Instance.OnPlayerDeath(actorNumber, PhotonView.Owner.ActorNumber);
     }
 }

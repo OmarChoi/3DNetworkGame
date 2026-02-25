@@ -16,7 +16,7 @@ public class UI_RoomInfo : MonoBehaviour
         Refresh();
     }
     
-    private void OnDisable()
+    private void OnDestroy()
     {
         PhotonRoomManager.Instance.OnDataChanged -= Refresh;
     }
