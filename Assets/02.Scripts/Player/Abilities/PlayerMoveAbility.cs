@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlayerMoveAbility : PlayerAbility
 {
     private const float GRAVITY = 30.0f;
+    private const float FALL_RESPAWN_HEIGHT = -10f;
     private float _yVelocity = 0f;
     
     private CharacterController _controller;
@@ -31,6 +32,8 @@ public class PlayerMoveAbility : PlayerAbility
         movement *= moveSpeed;
         movement.y = _yVelocity;
         _controller.Move(movement * Time.deltaTime);
+
+        CheckFallRespawn();
     }
 
     private bool CheckRun()
@@ -66,5 +69,13 @@ public class PlayerMoveAbility : PlayerAbility
             _yVelocity = canJump ? _owner.Stat.JumpPower : -1f;
         }
         _yVelocity -= GRAVITY * Time.deltaTime;
+    }
+
+    private void CheckFallRespawn()
+    {
+        if (transform.position.y >= FALL_RESPAWN_HEIGHT) return;
+        if (CharacterSpawner.Instance == null) return;
+
+        CharacterSpawner.Instance.StartRespawn(_owner);
     }
 }
