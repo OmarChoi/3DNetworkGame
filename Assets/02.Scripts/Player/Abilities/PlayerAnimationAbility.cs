@@ -1,8 +1,11 @@
+using System;
 using Photon.Pun;
 using UnityEngine;
 
 public class PlayerAnimationAbility : PlayerAbility
 {
+    public static Action OnAttackAnimationEnd;
+
     private static readonly int _moveSpeed = Animator.StringToHash("MoveSpeed");
     private static readonly int _attack1Trigger = Animator.StringToHash("Attack1Trigger");
     private static readonly int _attack2Trigger = Animator.StringToHash("Attack2Trigger");
@@ -10,14 +13,12 @@ public class PlayerAnimationAbility : PlayerAbility
 
     private CharacterController _characterController;
     private Animator _animator;
-    private bool _isAttacking;
 
     protected override void Awake()
     {
         base.Awake();
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
-        _isAttacking = false;
         PlayerAttackAbility.OnAttack += OnAttack;
     }
 
@@ -44,19 +45,14 @@ public class PlayerAnimationAbility : PlayerAbility
 
     private EPlayerAttack GetRandomAttack()
     {
-        return (EPlayerAttack)Random.Range(0, (int)EPlayerAttack.Count);
+        return (EPlayerAttack)UnityEngine.Random.Range(0, (int)EPlayerAttack.Count);
     }
 
     private void OnAttack()
     {
         if (!_owner.PhotonView.IsMine) return;
-        if (_isAttacking)
-        {
-            return;
-        }
 
         EPlayerAttack attack = GetRandomAttack();
-        _isAttacking = true;
         TriggerAttackAnimation(attack);
         _owner.PhotonView.RPC(nameof(RpcPlayAttackAnimation), RpcTarget.Others, (int)attack);
     }
@@ -87,6 +83,6 @@ public class PlayerAnimationAbility : PlayerAbility
     private void OnAttackEnd()
     {
         if (!_owner.PhotonView.IsMine) return;
-        _isAttacking = false;
+        OnAttackAnimationEnd?.Invoke();
     }
 }
