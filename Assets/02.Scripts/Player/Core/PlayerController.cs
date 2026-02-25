@@ -113,10 +113,14 @@ public class PlayerController : MonoBehaviour, IDamageable, IPunObservable
         }
     }
     
-    [PunRPC]
     public void TakeDamage(float damage)
     {
-        Debug.Log("TakeDamage");
+        PhotonView.RPC(nameof(TakeDamageRPC), RpcTarget.All, damage);
+    }
+
+    [PunRPC]
+    private void TakeDamageRPC(float damage)
+    {
         SetHealth(Stat.Health.Current - damage);
     }
 }

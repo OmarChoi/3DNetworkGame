@@ -1,5 +1,4 @@
-﻿using Photon.Pun;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerWeaponHitAbility : PlayerAbility
 {
@@ -9,8 +8,7 @@ public class PlayerWeaponHitAbility : PlayerAbility
         if (other.transform == _owner.transform) return;
         if (other.TryGetComponent(out IDamageable damageable))
         {
-            PlayerController player = other.GetComponent<PlayerController>();
-            player.PhotonView.RPC(nameof(damageable.TakeDamage), RpcTarget.All, _owner.Stat.Damage);
+            damageable.TakeDamage(_owner.Stat.Damage);
         }
     }
 }
