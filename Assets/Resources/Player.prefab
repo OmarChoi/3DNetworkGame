@@ -1943,7 +1943,7 @@ MonoBehaviour:
     JumpStaminaUsage: 5
     AttackStaminaUsage: 10
     RunStaminaUsage: 10
-    Damage: 10
+    Damage: 35
     _stamina:
       _current: 100
       _max: 100

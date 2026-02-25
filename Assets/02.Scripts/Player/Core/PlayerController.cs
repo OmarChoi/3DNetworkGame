@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IPunObservable
 
     private Renderer[] _renderers;
     public PlayerStat Stat;
+    public static event Action<PlayerController> OnPlayerDied;
     public event Action<PlayerStat> OnStatChanged;
     public event Action OnDeath;
     public event Action OnReset;
@@ -60,6 +61,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IPunObservable
 
         if (IsDead)
         {
+            OnPlayerDied?.Invoke(this);
             OnDeath?.Invoke();
             if (PhotonView.IsMine)
             {
