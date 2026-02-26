@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IPunObservable
 
     private Renderer[] _renderers;
     public PlayerStat Stat;
+    public static event Action<PlayerController> OnLocalPlayerCreated;
     public static event Action<PlayerController> OnPlayerDied;
     public event Action<PlayerStat> OnStatChanged;
     public event Action OnDeath;
@@ -28,6 +29,11 @@ public class PlayerController : MonoBehaviour, IDamageable, IPunObservable
     private void Start()
     {
         NotifyStatChanged();
+
+        if (PhotonView.IsMine)
+        {
+            OnLocalPlayerCreated?.Invoke(this);
+        }
     }
     
     private Dictionary<Type, PlayerAbility> _abilitiesCache = new();
@@ -61,6 +67,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IPunObservable
 
         if (IsDead)
         {
+            Controller.enabled = false;
             OnPlayerDied?.Invoke(this);
             OnDeath?.Invoke();
             if (PhotonView.IsMine)
@@ -141,13 +148,6 @@ public class PlayerController : MonoBehaviour, IDamageable, IPunObservable
         }
         if (Controller != null) Controller.enabled = visible;
     }
-    
-    public void Teleport(Vector3 position)
-    {
-        if (Controller != null) Controller.enabled = false;
-        transform.position = position;
-        if (Controller != null) Controller.enabled = true;
-    }
 
     public void ResetPlayer(Vector3 spawnPosition)
     {
@@ -158,7 +158,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IPunObservable
     private void RespawnRPC(Vector3 spawnPosition)
     {
         SetVisible(false);
-        Teleport(spawnPosition);
+        transform.position = spawnPosition;
 
         if (PhotonView.IsMine)
         {
@@ -168,6 +168,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IPunObservable
             NotifyStatChanged();
         }
 
+        Controller.enabled = true;
         SetVisible(true);
         OnReset?.Invoke();
     }

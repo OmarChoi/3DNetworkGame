@@ -46,6 +46,8 @@ MonoBehaviour:
   - ResetPlayerRPC
   - RespawnRPC
   - MakeScoreItems
+  - DestroyRPC
+  - HandlePickupRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

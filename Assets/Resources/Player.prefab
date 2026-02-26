@@ -2080,6 +2080,9 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 0
     Name: Attack3Trigger
+  - Type: 9
+    SynchronizeType: 0
+    Name: DeathTrigger
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0

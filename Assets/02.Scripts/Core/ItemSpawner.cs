@@ -47,8 +47,17 @@ public class ItemSpawner : SingletonBehaviour<ItemSpawner>
         for (int i = 0; i < count; i++)
         {
             Vector2 randomCircle = Random.insideUnitCircle * _scatterRadius;
+
+            // 소유자가 나가면 해당 네트워크 게임 오브젝트도 삭제된다.
+            // 즉, 플레이어가 룸을 나가면 그 플레이어가 생성/소유한 모든 네트워크 게임 오브젝트는 삭제된다.
+            // Instantiate로 생성한 Object는 Player 생명 주기를 가지고 있다.
             Vector3 spawnPosition = makePosition + new Vector3(randomCircle.x, _spawnHeight, randomCircle.y);
             PhotonNetwork.InstantiateRoomObject(_itemPrefab.name, spawnPosition, Quaternion.identity);
+
+            // 포톤에는 룸 안에 방장(Master Client)이 있다.
+            // 방을 만든 사람이 방장
+            // - 방장을 양도할 수 있다.
+            // - 방장이 게임을 나가면 자동으로 그 다음으로 들어온 사람이 방장이 된다.
         }
     }
 }
