@@ -53,6 +53,7 @@ MonoBehaviour:
   - DeleteRPC
   - MakeScoreItemsRPC
   - UpdateScoreRPC
+  - DropScoreItemsRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

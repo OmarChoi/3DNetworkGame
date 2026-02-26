@@ -1,22 +1,20 @@
 using Photon.Pun;
 using UnityEngine;
 
-public class ItemDropper : SingletonBehaviour<ItemDropper>
+public class ItemDropper : SingletonPunCallbacks<ItemDropper>
 {
     [SerializeField] private GameObject _itemPrefab;
     [SerializeField] private float _spawnHeight = 1f;
     [SerializeField] private float _scatterRadius = 2f;
     [SerializeField] private int _minCount = 3;
     [SerializeField] private int _maxCount = 5;
-    private PhotonView _photonView;
 
-    private void OnEnable()
+    public override void OnEnable()
     {
         PlayerController.OnPlayerDied += OnPlayerDied;
-        _photonView = GetComponent<PhotonView>();
     }
 
-    private void OnDisable()
+    public override void OnDisable()
     {
         PlayerController.OnPlayerDied -= OnPlayerDied;
     }
@@ -24,18 +22,18 @@ public class ItemDropper : SingletonBehaviour<ItemDropper>
     private void OnPlayerDied(PlayerController player)
     {
         if (!player.PhotonView.IsMine) return;
-        RequestMakeScoreItems(player.transform.position);
+        RequestDropScoreItems(player.transform.position);
     }
 
-    private void RequestMakeScoreItems(Vector3 makePosition)
+    private void RequestDropScoreItems(Vector3 makePosition)
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            MakeScoreItemsRPC(makePosition);
+            DropScoreItemsRPC(makePosition);
         }
         else
         {
-            _photonView.RPC(nameof(MakeScoreItemsRPC), RpcTarget.MasterClient, makePosition);
+            photonView.RPC(nameof(DropScoreItemsRPC), RpcTarget.MasterClient, makePosition);
         }
     }
 
@@ -47,7 +45,7 @@ public class ItemDropper : SingletonBehaviour<ItemDropper>
         }
         else
         {
-            _photonView.RPC(nameof(DeleteRPC), RpcTarget.MasterClient, viewId);
+            photonView.RPC(nameof(DeleteRPC), RpcTarget.MasterClient, viewId);
         }
     }
     
@@ -60,7 +58,7 @@ public class ItemDropper : SingletonBehaviour<ItemDropper>
     }
     
     [PunRPC]
-    private void MakeScoreItemsRPC(Vector3 makePosition)
+    private void DropScoreItemsRPC(Vector3 makePosition)
     {
         int count = Random.Range(_minCount, _maxCount + 1);
 

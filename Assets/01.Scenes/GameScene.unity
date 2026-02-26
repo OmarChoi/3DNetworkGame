@@ -388,6 +388,56 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6625984507259324429, guid: ccebfc242bed46749a5dcef87dd83423, type: 3}
   m_PrefabInstance: {fileID: 33210540}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &33412721
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 33412723}
+  - component: {fileID: 33412722}
+  m_Layer: 0
+  m_Name: ItemSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &33412722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 33412721}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d79413832ef438c925766db7231dd2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemSpawner
+  _itemPrefab: {fileID: 1964238534845440974, guid: 63c4ecf19d939e44ca6de2e5bad112b1, type: 3}
+  _mapWidth: 80
+  _mapHeight: 80
+  _spawnHeight: 40
+  _spawnCount: 5
+  _spawnCooldown: 10
+--- !u!4 &33412723
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 33412721}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &49976480
 GameObject:
   m_ObjectHideFlags: 0
@@ -3609,6 +3659,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7462569862156873362, guid: 1aba0fbf10ced5447ad5eb30f4652084, type: 3}
   m_PrefabInstance: {fileID: 349156478}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &353179061
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 353179062}
+  m_Layer: 0
+  m_Name: -----------Spawner-----------
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &353179062
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 353179061}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &377475432
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6787,7 +6868,7 @@ MonoBehaviour:
   - {fileID: 521357487}
   - {fileID: 1370001493}
   - {fileID: 1800514305}
-  _respawnTime: 5
+  _respawnTime: 3
 --- !u!4 &744702197
 Transform:
   m_ObjectHideFlags: 0
@@ -18982,13 +19063,15 @@ SceneRoots:
   - {fileID: 597657717}
   - {fileID: 637354737}
   - {fileID: 507337444}
+  - {fileID: 353179062}
+  - {fileID: 744041662}
+  - {fileID: 744702197}
+  - {fileID: 33412723}
+  - {fileID: 107277458}
   - {fileID: 1245205952}
   - {fileID: 1119575402}
   - {fileID: 970228744}
-  - {fileID: 744041662}
-  - {fileID: 744702197}
   - {fileID: 238181232}
   - {fileID: 25790646}
   - {fileID: 409531781}
-  - {fileID: 107277458}
   - {fileID: 252123926}
