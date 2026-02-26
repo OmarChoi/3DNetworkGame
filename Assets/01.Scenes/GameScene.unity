@@ -6453,6 +6453,7 @@ GameObject:
   m_Component:
   - component: {fileID: 744041662}
   - component: {fileID: 744041661}
+  - component: {fileID: 744041663}
   m_Layer: 0
   m_Name: ItemSpawner
   m_TagString: Untagged
@@ -6473,7 +6474,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSpawner
   _itemPrefab: {fileID: 1964238534845440974, guid: 63c4ecf19d939e44ca6de2e5bad112b1, type: 3}
-  _spawnOffset: {x: 0, y: 1, z: 0}
+  _spawnHeight: 1
+  _scatterRadius: 2
+  _minCount: 3
+  _maxCount: 5
 --- !u!4 &744041662
 Transform:
   m_ObjectHideFlags: 0
@@ -6489,6 +6493,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &744041663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 744041660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: PhotonUnityNetworking::Photon.Pun.PhotonView
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 2
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &744702195
 GameObject:
   m_ObjectHideFlags: 0

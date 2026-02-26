@@ -45,6 +45,7 @@ MonoBehaviour:
   - TakeDamageRPC
   - ResetPlayerRPC
   - RespawnRPC
+  - MakeScoreItems
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
