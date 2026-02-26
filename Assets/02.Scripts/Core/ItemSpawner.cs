@@ -31,11 +31,11 @@ public class ItemSpawner : SingletonBehaviour<ItemSpawner>
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            MakeScoreItems(makePosition);
+            MakeScoreItemsRPC(makePosition);
         }
         else
         {
-            _photonView.RPC(nameof(MakeScoreItems), RpcTarget.MasterClient, makePosition);
+            _photonView.RPC(nameof(MakeScoreItemsRPC), RpcTarget.MasterClient, makePosition);
         }
     }
 
@@ -43,16 +43,16 @@ public class ItemSpawner : SingletonBehaviour<ItemSpawner>
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            Delete(viewId);
+            DeleteRPC(viewId);
         }
         else
         {
-            _photonView.RPC(nameof(Delete), RpcTarget.MasterClient, viewId);
+            _photonView.RPC(nameof(DeleteRPC), RpcTarget.MasterClient, viewId);
         }
     }
     
     [PunRPC]
-    private void Delete(int viewId)
+    private void DeleteRPC(int viewId)
     {
         GameObject objectToDelete = PhotonView.Find(viewId)?.gameObject;
         if (objectToDelete == null) return;
@@ -60,7 +60,7 @@ public class ItemSpawner : SingletonBehaviour<ItemSpawner>
     }
     
     [PunRPC]
-    private void MakeScoreItems(Vector3 makePosition)
+    private void MakeScoreItemsRPC(Vector3 makePosition)
     {
         int count = Random.Range(_minCount, _maxCount + 1);
 

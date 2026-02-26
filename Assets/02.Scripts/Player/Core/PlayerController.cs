@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour, IDamageable, IPunObservable
     public event Action OnReset;
 
     public bool IsDead => Stat.Health.Current <= 0f;
+    private const int KillScore = 1000;
 
     private void Awake()
     {
@@ -186,5 +187,6 @@ public class PlayerController : MonoBehaviour, IDamageable, IPunObservable
         SetHealth(Stat.Health.Current - damage);
         if (!IsDead) return;
         PhotonRoomManager.Instance.OnPlayerDeath(actorNumber, PhotonView.Owner.ActorNumber);
+        ScoreManager.Instance.RequestAddScore(actorNumber, KillScore);
     }
 }
