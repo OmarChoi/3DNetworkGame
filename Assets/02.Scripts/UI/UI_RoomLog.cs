@@ -16,6 +16,7 @@ public class UI_RoomLog : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (PhotonRoomManager.Instance == null) return;
         PhotonRoomManager.Instance.OnPlayerEnter -= PlayerEnterLog;
         PhotonRoomManager.Instance.OnPlayerLeft -= PlayerLeftLog;
         PhotonRoomManager.Instance.OnPlayerDeathed -= PlayerDeathLog;

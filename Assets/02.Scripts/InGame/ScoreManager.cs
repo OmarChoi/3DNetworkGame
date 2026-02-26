@@ -3,18 +3,11 @@ using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class ScoreManager : MonoBehaviourPunCallbacks
+public class ScoreManager : SingletonPunCallbacks<ScoreManager>
 {
-    public static ScoreManager Instance { get; private set; }
-
-    private readonly Dictionary<int, int> _scores = new();
+    private readonly Dictionary<int, int> _scores = new Dictionary<int, int>();
 
     public event Action<int, int> OnScoreChanged; // actorNumber, newScore
-
-    private void Awake()
-    {
-        Instance = this;
-    }
 
     public int GetScore(int actorNumber)
     {

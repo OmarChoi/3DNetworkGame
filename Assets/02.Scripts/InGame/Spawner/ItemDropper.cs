@@ -1,7 +1,7 @@
 using Photon.Pun;
 using UnityEngine;
 
-public class ItemSpawner : SingletonBehaviour<ItemSpawner>
+public class ItemDropper : SingletonBehaviour<ItemDropper>
 {
     [SerializeField] private GameObject _itemPrefab;
     [SerializeField] private float _spawnHeight = 1f;

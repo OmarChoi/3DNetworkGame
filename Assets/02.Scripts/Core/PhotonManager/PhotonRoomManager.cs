@@ -2,19 +2,14 @@ using System;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class PhotonRoomManager : MonoBehaviourPunCallbacks
+public class PhotonRoomManager : SingletonPunCallbacks<PhotonRoomManager>
 {
-    public static PhotonRoomManager Instance { get; private set; }
     private Room _room;
     public Room Room => _room;
     public event Action OnDataChanged;
     public event Action<Player> OnPlayerEnter;
     public event Action<Player> OnPlayerLeft;
     public event Action<string, string> OnPlayerDeathed;
-    private void Awake()
-    {
-        Instance = this;
-    }
     
     public override void OnJoinedRoom()
     {

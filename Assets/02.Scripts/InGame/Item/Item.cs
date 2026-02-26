@@ -13,7 +13,7 @@ public class Item : MonoBehaviourPun
         if (!player.PhotonView.IsMine) return;
         
         _isPickedUp = true;
-        ItemSpawner.Instance.RequestDelete(photonView.ViewID);
+        ItemDropper.Instance.RequestDelete(photonView.ViewID);
         ScoreManager.Instance.RequestAddScore(player.PhotonView.Owner.ActorNumber, _scoreAmount);
     }
 }
