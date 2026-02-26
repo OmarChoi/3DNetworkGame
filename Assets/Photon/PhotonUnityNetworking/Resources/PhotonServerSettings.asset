@@ -48,6 +48,7 @@ MonoBehaviour:
   - MakeScoreItems
   - DestroyRPC
   - HandlePickupRPC
+  - Delete
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
