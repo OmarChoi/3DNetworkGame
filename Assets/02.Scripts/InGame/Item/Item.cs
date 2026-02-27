@@ -25,7 +25,7 @@ public class Item : MonoBehaviourPun
         if (!isBelowDestroyHeight && !isExpired) return;
 
         _isDestroyRequested = true;
-        PhotonNetwork.Destroy(gameObject);
+        ItemManager.Instance.RequestDelete(photonView.ViewID);
     }
     
     private void OnTriggerEnter(Collider other)
