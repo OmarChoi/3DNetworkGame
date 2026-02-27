@@ -32,8 +32,9 @@ public class PhotonRoomManager : SingletonPunCallbacks<PhotonRoomManager>
 
     public void OnPlayerDeath(int attackerActorNumber, int victimActorNumber)
     {
-        string attackerNickname = _room.Players[attackerActorNumber].NickName;
-        string victimNickname = _room.Players[victimActorNumber].NickName;
-        OnPlayerDied?.Invoke(attackerNickname, victimNickname);
+        if (_room == null) return;
+        if (!_room.Players.TryGetValue(attackerActorNumber, out Player attacker)) return;
+        if (!_room.Players.TryGetValue(victimActorNumber, out Player victim)) return;
+        OnPlayerDied?.Invoke(attacker.NickName, victim.NickName);
     }
 }

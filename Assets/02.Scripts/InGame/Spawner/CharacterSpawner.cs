@@ -31,6 +31,11 @@ public class CharacterSpawner : SingletonBehaviour<CharacterSpawner>
 
     private Vector3 GetRandomSpawnPosition()
     {
+        if (_spawnPoints == null || _spawnPoints.Length == 0)
+        {
+            Debug.LogError("스폰 지점이 설정되지 않았습니다.");
+            return Vector3.zero;
+        }
         int index = Random.Range(0, _spawnPoints.Length);
         return _spawnPoints[index].position;
     }
