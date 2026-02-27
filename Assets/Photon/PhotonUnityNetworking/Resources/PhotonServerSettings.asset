@@ -41,8 +41,20 @@ MonoBehaviour:
   - RespawnSpaceship
   - RpcPlayAttack
   - RpcResetAttack
-  - TakeDamage
   - RpcPlayAttackAnimation
+  - TakeDamageRPC
+  - ResetPlayerRPC
+  - RespawnRPC
+  - MakeScoreItems
+  - DestroyRPC
+  - HandlePickupRPC
+  - Delete
+  - AddScoreRPC
+  - DeleteRPC
+  - MakeScoreItemsRPC
+  - UpdateScoreRPC
+  - DropScoreItemsRPC
+  - CreateRPC
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
