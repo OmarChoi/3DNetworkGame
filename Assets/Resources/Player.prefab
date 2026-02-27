@@ -1943,7 +1943,7 @@ MonoBehaviour:
     JumpStaminaUsage: 5
     AttackStaminaUsage: 10
     RunStaminaUsage: 10
-    Damage: 35
+    Damage: 10
     _stamina:
       _current: 100
       _max: 100
@@ -2080,9 +2080,6 @@ MonoBehaviour:
   - Type: 9
     SynchronizeType: 0
     Name: Attack3Trigger
-  - Type: 9
-    SynchronizeType: 0
-    Name: DeathTrigger
   m_SynchronizeLayers:
   - SynchronizeType: 0
     LayerIndex: 0
