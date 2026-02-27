@@ -11,7 +11,7 @@ public class UI_RoomLog : MonoBehaviour
         _logText.text = "방에 입장했습니다.";
         PhotonRoomManager.Instance.OnPlayerEnter += PlayerEnterLog;
         PhotonRoomManager.Instance.OnPlayerLeft += PlayerLeftLog;
-        PhotonRoomManager.Instance.OnPlayerDeathed += PlayerDeathLog;
+        PhotonRoomManager.Instance.OnPlayerDied += PlayerDeathLog;
     }
 
     private void OnDestroy()
@@ -19,7 +19,7 @@ public class UI_RoomLog : MonoBehaviour
         if (PhotonRoomManager.Instance == null) return;
         PhotonRoomManager.Instance.OnPlayerEnter -= PlayerEnterLog;
         PhotonRoomManager.Instance.OnPlayerLeft -= PlayerLeftLog;
-        PhotonRoomManager.Instance.OnPlayerDeathed -= PlayerDeathLog;
+        PhotonRoomManager.Instance.OnPlayerDied -= PlayerDeathLog;
     }
     
     private void PlayerEnterLog(Player newPlayer)
