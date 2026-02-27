@@ -9,7 +9,7 @@ public class PhotonRoomManager : SingletonPunCallbacks<PhotonRoomManager>
     public event Action OnDataChanged;
     public event Action<Player> OnPlayerEnter;
     public event Action<Player> OnPlayerLeft;
-    public event Action<string, string> OnPlayerDeathed;
+    public event Action<string, string> OnPlayerDied;
     
     public override void OnJoinedRoom()
     {
@@ -34,6 +34,6 @@ public class PhotonRoomManager : SingletonPunCallbacks<PhotonRoomManager>
     {
         string attackerNickname = _room.Players[attackerActorNumber].NickName;
         string victimNickname = _room.Players[victimActorNumber].NickName;
-        OnPlayerDeathed?.Invoke(attackerNickname, victimNickname);
+        OnPlayerDied?.Invoke(attackerNickname, victimNickname);
     }
 }

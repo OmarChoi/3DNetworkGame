@@ -19,17 +19,10 @@ public class ScoreManager : SingletonPunCallbacks<ScoreManager>
         return new Dictionary<int, int>(_scores);
     }
 
-    public void RequestAddScore(int actorNumber, int amount)
+    public void AddScore(int actorNumber, int amount)
     {
-        if (PhotonNetwork.LocalPlayer.ActorNumber != actorNumber) return;
-        if (PhotonNetwork.IsMasterClient)
-        {
-            AddScoreRPC(actorNumber, amount);
-        }
-        else
-        {
-            photonView.RPC(nameof(AddScoreRPC), RpcTarget.MasterClient, actorNumber, amount);
-        }
+        if (!PhotonNetwork.IsMasterClient) return;
+        AddScoreRPC(actorNumber, amount);
     }
 
     [PunRPC]

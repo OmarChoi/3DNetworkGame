@@ -19,13 +19,19 @@ public class ItemManager : SingletonPunCallbacks<ItemManager>
 
     public void RequestDelete(int viewId)
     {
+        DeleteRPC(viewId, -1, 0);
+    }
+
+    public void RequestDelete(ItemInfo info)
+    {
         if (PhotonNetwork.IsMasterClient)
         {
-            DeleteRPC(viewId);
+            DeleteRPC(info.ViewId, info.ActorNumber, info.ScoreAmount);
         }
         else
         {
-            photonView.RPC(nameof(DeleteRPC), RpcTarget.MasterClient, viewId);
+            photonView.RPC(nameof(DeleteRPC), RpcTarget.MasterClient,
+                info.ViewId, info.ActorNumber, info.ScoreAmount);
         }
     }
 
@@ -36,10 +42,16 @@ public class ItemManager : SingletonPunCallbacks<ItemManager>
     }
 
     [PunRPC]
-    private void DeleteRPC(int viewId)
+    private void DeleteRPC(int viewId, int actorNumber, int scoreAmount)
     {
         GameObject objectToDelete = PhotonView.Find(viewId)?.gameObject;
         if (objectToDelete == null) return;
+
         PhotonNetwork.Destroy(objectToDelete);
+
+        if (actorNumber >= 0)
+        {
+            ScoreManager.Instance.AddScore(actorNumber, scoreAmount);
+        }
     }
 }
