@@ -4312,7 +4312,7 @@ namespace Photon.Realtime
     /// Container type for callbacks defined by IConnectionCallbacks. See LoadBalancingCallbackTargets.
     /// </summary>
     /// <remarks>
-    /// While the interfaces of callbacks wrap upQ the methods that will be called,
+    /// While the interfaces of callbacks wrap up the methods that will be called,
     /// the container classes implement a simple way to call a method on all registered objects.
     /// </remarks>
     public class ConnectionCallbacksContainer : List<IConnectionCallbacks>, IConnectionCallbacks
