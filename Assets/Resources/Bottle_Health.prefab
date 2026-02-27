@@ -5050,6 +5050,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
   _scoreAmount: 100
+  _destroyHeight: -10
+  _lifeTime: 30
 --- !u!114 &-4637349361933967886
 MonoBehaviour:
   m_ObjectHideFlags: 0
