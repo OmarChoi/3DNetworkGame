@@ -11,16 +11,15 @@ public class BearController : MonoBehaviour
     private BearState _currentState;
    
     private NavMeshAgent _agent;
-    private Animator _animator;
-
     public BearStat Stats;
     public Transform Target { get; private set; }
+    public Animator Animator { get; private set; }
     
     
     private void Awake()
     {
         _agent = GetComponent<NavMeshAgent>();
-        _animator = GetComponent<Animator>();
+        Animator = GetComponent<Animator>();
         
         SetStates();
     }

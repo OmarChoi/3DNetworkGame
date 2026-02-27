@@ -1,7 +1,12 @@
 public abstract class BearState
 {
-    protected BearController _controller;
-    public virtual void Enter() { }
+    protected readonly BearController _controller;
+    protected abstract int AnimTriggerHash { get; }
+
+    public virtual void Enter()
+    {
+        _controller.Animator.SetTrigger(AnimTriggerHash);
+    }
     public virtual void Update() { }
     public virtual void Exit() { }
 
