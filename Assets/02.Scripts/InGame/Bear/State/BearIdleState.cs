@@ -2,26 +2,21 @@ using UnityEngine;
 
 public class BearIdleState : BearState
 {
-    private float _enterTime;
+    private float _remainTime;
     private float _startPatrolTime;
     
     public BearIdleState(BearController controller) : base(controller) { }
-    public virtual void Enter()
+    public override void Enter()
     {
-        _enterTime = Time.time;
+        _remainTime = _startPatrolTime; // 대기 시간
     }
 
-    public virtual void Update()
+    public override void Update()
     {
-        _enterTime -= Time.deltaTime;
-        if (_enterTime <= 0)
+        _remainTime -= Time.deltaTime;
+        if (_remainTime <= 0)
         {
-            _enterTime = Time.time;
+            _controller.ChangeState<BearPatrolState>();
         }
-    }
-
-    public virtual void Exit()
-    {
-        
     }
 }

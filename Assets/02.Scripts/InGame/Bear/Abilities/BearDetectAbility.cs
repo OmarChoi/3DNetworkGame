@@ -4,8 +4,9 @@ public class BearDetectAbility : BearAbility
 {
     private SphereCollider _collider;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _collider = GetComponent<SphereCollider>();
     }
 

@@ -7,7 +7,7 @@ using UnityEngine.AI;
 public class BearController : MonoBehaviour
 {
     private Dictionary<Type, BearState> _states;
-    private Dictionary<Type, BearAbility> _abilitiesCache;
+    private readonly Dictionary<Type, BearAbility> _abilitiesCache = new Dictionary<Type, BearAbility>();
     private BearState _currentState;
    
     private NavMeshAgent _agent;
