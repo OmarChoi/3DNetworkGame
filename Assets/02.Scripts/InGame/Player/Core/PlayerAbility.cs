@@ -2,10 +2,10 @@
 
 public abstract class PlayerAbility : MonoBehaviour
 {
-    protected PlayerController _owner { get; private set; }
+    protected PlayerController Owner { get; private set; }
 
     protected virtual void Awake()
     {
-        _owner = GetComponentInParent<PlayerController>();
+        Owner = GetComponentInParent<PlayerController>();
     }
 }

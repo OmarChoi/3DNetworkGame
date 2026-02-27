@@ -8,22 +8,22 @@ public class PlayerStatusUIAbility : PlayerAbility
 
     private void OnEnable()
     {
-        if (_owner == null) return;
+        if (Owner == null) return;
 
-        _owner.OnStatChanged += OnStatChanged;
+        Owner.OnStatChanged += OnStatChanged;
         RefreshUI();
     }
 
     private void OnDisable()
     {
-        if (_owner == null) return;
+        if (Owner == null) return;
 
-        _owner.OnStatChanged -= OnStatChanged;
+        Owner.OnStatChanged -= OnStatChanged;
     }
 
     private void RefreshUI()
     {
-        OnStatChanged(_owner.Stat);
+        OnStatChanged(Owner.Stat);
     }
 
     private void OnStatChanged(PlayerStat stat)

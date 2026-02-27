@@ -12,7 +12,7 @@ public class PlayerMoveAbility : PlayerAbility
     protected override void Awake()
     {
         base.Awake();
-        _controller = _owner.Controller;
+        _controller = Owner.Controller;
     }
     
     private void Start()
@@ -22,13 +22,13 @@ public class PlayerMoveAbility : PlayerAbility
 
     private void Update()
     {
-        if (!_owner.PhotonView.IsMine) return;
-        if (_owner.IsDead) return;
+        if (!Owner.PhotonView.IsMine) return;
+        if (Owner.IsDead) return;
         Vector3 movement = GetMovement();
         UpdateJump();
 
         bool isRunning = CheckRun();
-        float moveSpeed = isRunning ? _owner.Stat.RunSpeed : _owner.Stat.MoveSpeed;
+        float moveSpeed = isRunning ? Owner.Stat.RunSpeed : Owner.Stat.MoveSpeed;
         movement *= moveSpeed;
         movement.y = _yVelocity;
         _controller.Move(movement * Time.deltaTime);
@@ -38,16 +38,16 @@ public class PlayerMoveAbility : PlayerAbility
 
     private bool CheckRun()
     {
-        float runStaminaUsage = _owner.Stat.RunStaminaUsage;
+        float runStaminaUsage = Owner.Stat.RunStaminaUsage;
 
-        if (Input.GetKey(KeyCode.LeftShift) && _owner.Stat.Stamina.Current > runStaminaUsage)
+        if (Input.GetKey(KeyCode.LeftShift) && Owner.Stat.Stamina.Current > runStaminaUsage)
         {
-            _owner.AddStamina(-runStaminaUsage *  Time.deltaTime);
+            Owner.AddStamina(-runStaminaUsage *  Time.deltaTime);
             return true;
         }
         else
         {
-            _owner.AddStamina(_owner.Stat.StaminaRecovery * Time.deltaTime);
+            Owner.AddStamina(Owner.Stat.StaminaRecovery * Time.deltaTime);
             return false;
         }
     }
@@ -65,8 +65,8 @@ public class PlayerMoveAbility : PlayerAbility
     {
         if (_controller.isGrounded)
         {
-            bool canJump = Input.GetKeyDown(KeyCode.Space) && _owner.TryUseStamina(_owner.Stat.JumpStaminaUsage);
-            _yVelocity = canJump ? _owner.Stat.JumpPower : -1f;
+            bool canJump = Input.GetKeyDown(KeyCode.Space) && Owner.TryUseStamina(Owner.Stat.JumpStaminaUsage);
+            _yVelocity = canJump ? Owner.Stat.JumpPower : -1f;
         }
         _yVelocity -= GRAVITY * Time.deltaTime;
     }
@@ -76,6 +76,6 @@ public class PlayerMoveAbility : PlayerAbility
         if (transform.position.y >= FALL_RESPAWN_HEIGHT) return;
         if (CharacterSpawner.Instance == null) return;
 
-        CharacterSpawner.Instance.StartRespawn(_owner);
+        CharacterSpawner.Instance.StartRespawn(Owner);
     }
 }

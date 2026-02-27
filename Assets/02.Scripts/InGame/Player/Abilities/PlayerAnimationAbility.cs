@@ -21,20 +21,20 @@ public class PlayerAnimationAbility : PlayerAbility
         _characterController = GetComponent<CharacterController>();
         _animator = GetComponent<Animator>();
         PlayerAttackAbility.OnAttack += OnAttack;
-        _owner.OnDeath += OnDeath;
-        _owner.OnReset += OnReset;
+        Owner.OnDeath += OnDeath;
+        Owner.OnReset += OnReset;
     }
 
     private void OnDestroy()
     {
         PlayerAttackAbility.OnAttack -= OnAttack;
-        _owner.OnDeath -= OnDeath;
-        _owner.OnReset -= OnReset;
+        Owner.OnDeath -= OnDeath;
+        Owner.OnReset -= OnReset;
     }
 
     private void Update()
     {
-        if (!_owner.PhotonView.IsMine) return;
+        if (!Owner.PhotonView.IsMine) return;
         UpdateAnimation();
     }
     
@@ -44,7 +44,7 @@ public class PlayerAnimationAbility : PlayerAbility
         velocity.y = 0;
         float speed = velocity.magnitude;
 
-        float normalizedSpeed = speed / _owner.Stat.MoveSpeed;
+        float normalizedSpeed = speed / Owner.Stat.MoveSpeed;
         _animator.SetFloat(_moveSpeed, normalizedSpeed);
     }
 
@@ -55,11 +55,11 @@ public class PlayerAnimationAbility : PlayerAbility
 
     private void OnAttack()
     {
-        if (!_owner.PhotonView.IsMine) return;
+        if (!Owner.PhotonView.IsMine) return;
 
         EPlayerAttack attack = GetRandomAttack();
         TriggerAttackAnimation(attack);
-        _owner.PhotonView.RPC(nameof(RpcPlayAttackAnimation), RpcTarget.Others, (int)attack);
+        Owner.PhotonView.RPC(nameof(RpcPlayAttackAnimation), RpcTarget.Others, (int)attack);
     }
 
     private void TriggerAttackAnimation(EPlayerAttack attack)
@@ -81,7 +81,7 @@ public class PlayerAnimationAbility : PlayerAbility
     [PunRPC]
     private void RpcPlayAttackAnimation(int attackValue)
     {
-        if (_owner.PhotonView.IsMine) return;
+        if (Owner.PhotonView.IsMine) return;
         TriggerAttackAnimation((EPlayerAttack)attackValue);
     }
 
@@ -98,7 +98,7 @@ public class PlayerAnimationAbility : PlayerAbility
 
     private void OnAttackEnd()
     {
-        if (!_owner.PhotonView.IsMine) return;
+        if (!Owner.PhotonView.IsMine) return;
         OnAttackAnimationEnd?.Invoke();
     }
 }

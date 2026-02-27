@@ -5,12 +5,12 @@ public class PlayerWeaponHitAbility : PlayerAbility
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (!_owner.PhotonView.IsMine) return;
-        if (other.transform == _owner.transform) return;
+        if (!Owner.PhotonView.IsMine) return;
+        if (other.transform == Owner.transform) return;
         int actorNumber = PhotonNetwork.LocalPlayer.ActorNumber;
         if (other.TryGetComponent(out IDamageable damageable))
         {
-            damageable.TakeDamage(_owner.Stat.Damage, actorNumber);
+            damageable.TakeDamage(Owner.Stat.Damage, actorNumber);
         }
     }
 }
