@@ -3,34 +3,34 @@ using UnityEngine;
 public class BearIdleState : BearState
 {
     private float _remainTime;
-    private float _startPatrolTime;
-    
+    private readonly float _startPatrolTime = 3.0f;
+
     public BearIdleState(BearController controller) : base(controller) { }
     protected override int AnimTriggerHash => Animator.StringToHash("IdleEnter");
+
     public override void Enter()
     {
         base.Enter();
-        _remainTime = _startPatrolTime; // 대기 시간
+        _remainTime = _startPatrolTime;
+        _controller.OnTargetDetected += TransitionToChase;
     }
 
     public override void Update()
     {
-        if (CheckChaseTransition()) return;
-        if (CheckPatrolTransition()) return;
-    }
-
-    private bool CheckChaseTransition()
-    {
-        if (_controller.Target == null) return false;
-        _controller.ChangeState<BearChaseState>();
-        return true;
-    }
-
-    private bool CheckPatrolTransition()
-    {
         _remainTime -= Time.deltaTime;
-        if (_remainTime > 0) return false;
-        _controller.ChangeState<BearPatrolState>();
-        return true;
+        if (_remainTime <= 0)
+        {
+            _controller.ChangeState<BearPatrolState>();
+        }
+    }
+
+    public override void Exit()
+    {
+        _controller.OnTargetDetected -= TransitionToChase;
+    }
+
+    private void TransitionToChase(Transform target)
+    {
+        _controller.ChangeState<BearChaseState>();
     }
 }

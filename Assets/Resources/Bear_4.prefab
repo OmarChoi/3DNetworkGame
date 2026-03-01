@@ -2137,8 +2137,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BearController
   Stats:
-    DetectDistance: 0
-    AttackDistance: 0
+    AttackDistance: 2
     MoveSpeed: 0
     Damage: 0
     Health:
@@ -2195,7 +2194,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

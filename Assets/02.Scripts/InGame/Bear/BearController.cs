@@ -9,18 +9,25 @@ public class BearController : MonoBehaviour
     private Dictionary<Type, BearState> _states;
     private readonly Dictionary<Type, BearAbility> _abilitiesCache = new Dictionary<Type, BearAbility>();
     private BearState _currentState;
-   
-    private NavMeshAgent _agent;
+
     public BearStat Stats;
+    public event Action<Transform> OnTargetDetected;
+    public event Action OnTargetLost;
+    public event Action OnAttackAnimationEnd;
+    public event Action OnHitAnimationEnd;
+
+    public Vector3 SpawnPosition { get; private set; }
     public Transform Target { get; private set; }
     public Animator Animator { get; private set; }
-    
-    
+    public NavMeshAgent Agent { get; private set; }
+
+
     private void Awake()
     {
-        _agent = GetComponent<NavMeshAgent>();
+        Agent = GetComponent<NavMeshAgent>();
         Animator = GetComponent<Animator>();
-        
+        SpawnPosition = transform.position;
+
         SetStates();
     }
     private void Update()
@@ -77,7 +84,13 @@ public class BearController : MonoBehaviour
     {
         if (Target != null) return;
         Target = target;
-        ChangeState<BearChaseState>();
+        OnTargetDetected?.Invoke(target);
+    }
+
+    public void ClearTarget()
+    {
+        Target = null;
+        OnTargetLost?.Invoke();
     }
 
     public bool CanAttack()
@@ -87,8 +100,30 @@ public class BearController : MonoBehaviour
         return distance <= Stats.AttackDistance;
     }
 
-    public void MoveTo(Vector3 destination)
+    public void NotifyHit()
     {
-        _agent.SetDestination(destination);
+        if (_currentState is BearHitState or BearDeathState) return;
+        ChangeState<BearHitState>();
+    }
+
+    public void NotifyDeath()
+    {
+        if (_currentState is BearDeathState) return;
+        ChangeState<BearDeathState>();
+    }
+    
+    public void AttackHit()
+    {
+        GetAbility<BearAttackAbility>().Attack();
+    }
+
+    public void AttackAnimationEnd()
+    {
+        OnAttackAnimationEnd?.Invoke();
+    }
+
+    public void HitAnimationEnd()
+    {
+        OnHitAnimationEnd?.Invoke();
     }
 }
