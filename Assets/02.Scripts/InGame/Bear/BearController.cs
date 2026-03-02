@@ -4,11 +4,12 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BearController : MonoBehaviour
+public class BearController : MonoBehaviourPun
 {
     private Dictionary<Type, BearState> _states;
     private readonly Dictionary<Type, BearAbility> _abilitiesCache = new Dictionary<Type, BearAbility>();
     private BearState _currentState;
+    private bool _initialized;
 
     public BearStat Stats;
     public event Action<Transform> OnTargetDetected;
@@ -30,8 +31,10 @@ public class BearController : MonoBehaviour
 
         SetStates();
     }
+    
     private void Update()
     {
+        if (!PhotonNetwork.IsConnectedAndReady) return;
         if (!PhotonNetwork.IsMasterClient) return;
         _currentState.Update();
     }
@@ -78,6 +81,12 @@ public class BearController : MonoBehaviour
         _currentState?.Exit();
         _currentState = _states[typeof(T)];
         _currentState.Enter();
+    }
+
+    [PunRPC]
+    public void SetAnimTriggerRpc(int triggerHash)
+    {
+        Animator.SetTrigger(triggerHash);
     }
 
     public void SetTarget(Transform target)

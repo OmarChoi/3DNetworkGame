@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine.AI;
 
 public abstract class BearState
@@ -10,6 +11,11 @@ public abstract class BearState
     public virtual void Enter()
     {
         _controller.Animator.SetTrigger(AnimTriggerHash);
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            _controller.photonView.RPC(nameof(_controller.SetAnimTriggerRpc), RpcTarget.Others, AnimTriggerHash);
+        }
     }
 
     public virtual void Update() { }

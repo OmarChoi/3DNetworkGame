@@ -19112,13 +19112,49 @@ PrefabInstance:
       propertyPath: Stats.DetectDistance
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5137412306730781992, guid: 00d544cb0afebc846b7210f169b686b3, type: 3}
+      propertyPath: sceneViewId
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988988026310618727, guid: 00d544cb0afebc846b7210f169b686b3, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[0].SynchronizeType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988988026310618727, guid: 00d544cb0afebc846b7210f169b686b3, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[1].SynchronizeType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988988026310618727, guid: 00d544cb0afebc846b7210f169b686b3, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[2].SynchronizeType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988988026310618727, guid: 00d544cb0afebc846b7210f169b686b3, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[3].SynchronizeType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988988026310618727, guid: 00d544cb0afebc846b7210f169b686b3, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[4].SynchronizeType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988988026310618727, guid: 00d544cb0afebc846b7210f169b686b3, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[5].SynchronizeType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988988026310618727, guid: 00d544cb0afebc846b7210f169b686b3, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[6].SynchronizeType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5988988026310618727, guid: 00d544cb0afebc846b7210f169b686b3, type: 3}
+      propertyPath: m_SynchronizeParameters.Array.data[7].SynchronizeType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7972746698265485819, guid: 00d544cb0afebc846b7210f169b686b3, type: 3}
       propertyPath: m_LocalPosition.x
       value: -16.19
       objectReference: {fileID: 0}
     - target: {fileID: 7972746698265485819, guid: 00d544cb0afebc846b7210f169b686b3, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7972746698265485819, guid: 00d544cb0afebc846b7210f169b686b3, type: 3}
       propertyPath: m_LocalPosition.z

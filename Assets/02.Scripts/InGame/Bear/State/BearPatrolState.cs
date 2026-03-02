@@ -12,12 +12,14 @@ public class BearPatrolState : BearState
     public override void Enter()
     {
         base.Enter();
-        Agent.SetDestination(GetRandomDestination());
+        if (Agent.isOnNavMesh) Agent.SetDestination(GetRandomDestination());
         _controller.OnTargetDetected += TransitionToChase;
     }
 
     public override void Update()
     {
+        if (!Agent.isOnNavMesh) return;
+
         if (!Agent.pathPending && Agent.remainingDistance <= Agent.stoppingDistance)
         {
             _controller.ChangeState<BearIdleState>();
@@ -27,7 +29,7 @@ public class BearPatrolState : BearState
     public override void Exit()
     {
         _controller.OnTargetDetected -= TransitionToChase;
-        Agent.ResetPath();
+        if (Agent.isOnNavMesh) Agent.ResetPath();
     }
 
     private Vector3 GetRandomDestination()

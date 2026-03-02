@@ -10,7 +10,7 @@ public class BearDeathState : BearState
 
     public override void Enter()
     {
-        _controller.Animator.SetTrigger(AnimTriggerHash);
+        base.Enter();
         _controller.Agent.enabled = false;
         _remainTime = _destroyDelay;
     }
