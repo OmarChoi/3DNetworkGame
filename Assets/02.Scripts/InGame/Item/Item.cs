@@ -36,6 +36,7 @@ public class Item : MonoBehaviourPun
         
         _isPickedUp = true;
         ItemInfo info = new ItemInfo(photonView.ViewID, player.PhotonView.Owner.ActorNumber, _scoreAmount);
+        ScoreManager.Instance.AddScore(_scoreAmount);
         ItemManager.Instance.RequestDelete(info);
     }
 }

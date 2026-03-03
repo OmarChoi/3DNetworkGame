@@ -187,6 +187,5 @@ public class PlayerController : MonoBehaviour, IDamageable, IPunObservable
         SetHealth(Stat.Health.Current - damage);
         if (!IsDead) return;
         PhotonRoomManager.Instance.OnPlayerDeath(actorNumber, PhotonView.Owner.ActorNumber);
-        ScoreManager.Instance.AddScore(actorNumber, KillScore);
     }
 }
