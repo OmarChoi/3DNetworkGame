@@ -4,7 +4,7 @@ using Photon.Pun;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BearController : MonoBehaviourPun
+public class BearController : MonoBehaviourPun, IDamageable
 {
     private Dictionary<Type, BearState> _states;
     private readonly Dictionary<Type, BearAbility> _abilitiesCache = new Dictionary<Type, BearAbility>();
@@ -16,6 +16,7 @@ public class BearController : MonoBehaviourPun
     public event Action OnTargetLost;
     public event Action OnAttackAnimationEnd;
     public event Action OnHitAnimationEnd;
+    public event Action OnHealthChanged;
 
     public Vector3 SpawnPosition { get; private set; }
     public Transform Target { get; private set; }
@@ -134,5 +135,28 @@ public class BearController : MonoBehaviourPun
     public void HitAnimationEnd()
     {
         OnHitAnimationEnd?.Invoke();
+    }
+    
+    public void TakeDamage(float damage, int actorNumber)
+    {
+        photonView.RPC(nameof(TakeDamageRpc), RpcTarget.All, damage, actorNumber);
+    }
+
+    [PunRPC]
+    private void TakeDamageRpc(float damage, int actorNumber)
+    {
+        Stats.Health.Add(-damage);
+        OnHealthChanged?.Invoke();
+
+        if (!PhotonNetwork.IsMasterClient) return;
+
+        if (Stats.Health.Current <= 0)
+        {
+            NotifyDeath();
+        }
+        else
+        {
+            NotifyHit();
+        }
     }
 }
