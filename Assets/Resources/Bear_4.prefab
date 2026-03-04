@@ -2333,11 +2333,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BearController
   Stats:
-    AttackDistance: 5
-    Damage: 35
+    AttackDistance: 2
+    Damage: 60
     _health:
-      _current: 100
-      _max: 100
+      _current: 5000
+      _max: 5000
 --- !u!114 &1894795237473280293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2381,7 +2381,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 5
+  m_Radius: 12
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!54 &1608641071598549350
 Rigidbody:

@@ -8,9 +8,9 @@ public class BearAttackState : BearState
 
     public override void Enter()
     {
-        base.Enter();
         _controller.OnTargetLost += TransitionToReturn;
         _controller.OnAttackAnimationEnd += OnAttackEnd;
+        base.Enter();
     }
 
     public override void Exit()

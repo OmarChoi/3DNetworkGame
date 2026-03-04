@@ -9,6 +9,7 @@ public class BearReturnState : BearState
     {
         base.Enter();
         Agent.SetDestination(_controller.SpawnPosition);
+        _controller.OnTargetDetected += TransitionToChase;
     }
 
     public override void Update()
@@ -21,6 +22,12 @@ public class BearReturnState : BearState
 
     public override void Exit()
     {
+        _controller.OnTargetDetected -= TransitionToChase;
         Agent.ResetPath();
+    }
+
+    private void TransitionToChase(Transform target)
+    {
+        _controller.ChangeState<BearChaseState>();
     }
 }

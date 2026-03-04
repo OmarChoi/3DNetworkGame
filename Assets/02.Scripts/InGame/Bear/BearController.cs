@@ -92,15 +92,19 @@ public class BearController : MonoBehaviourPun, IDamageable
 
     public void SetTarget(Transform target)
     {
-        if (Target != null) return;
-        Target = target;
-        OnTargetDetected?.Invoke(target);
-    }
+        if (Target == target) return;
 
-    public void ClearTarget()
-    {
-        Target = null;
-        OnTargetLost?.Invoke();
+        Transform prev = Target;
+        Target = target;
+
+        if (prev == null && target != null)
+        {
+            OnTargetDetected?.Invoke(target);
+        }
+        else if (prev != null && target == null)
+        {
+            OnTargetLost?.Invoke();
+        }
     }
 
     public bool CanAttack()
