@@ -22,18 +22,15 @@ public class UI_Score : MonoBehaviour
     private void Refresh(int actorNumber)
     {
         var scores = ScoreManager.Instance.Scores;
-        var scoresDatas = scores.Values?
+        if (scores == null) return;
+        var scoresData = scores.Values
                                 .OrderByDescending(x => x.Score)
                                 .ToList();
-        if (scoresDatas == null) return;
-        
-        // todo. 1등부터 3등까지 정렬
-        // todo. 3명 있는지 적절하게 반복문
-        int nDatas = scoresDatas.Count;
+        int nData = scoresData.Count;
         for(int i = 0; i < _items.Count; i++)
         {
-            if (i >= nDatas) break;
-            _items[i].Set(scoresDatas[i]);
+            if (i >= nData) break;
+            _items[i].Set(scoresData[i]);
         }
     }
 }

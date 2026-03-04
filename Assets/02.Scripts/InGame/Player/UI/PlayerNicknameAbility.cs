@@ -9,6 +9,7 @@ public class PlayerNicknameAbility : PlayerAbility
     private void Start()
     {
         _camera = Camera.main;
+        _nicknameTextUI.richText = false;
         _nicknameTextUI.text = Owner.PhotonView.Owner.NickName;
 
         if (Owner.PhotonView.IsMine)

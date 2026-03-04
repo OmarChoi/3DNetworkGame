@@ -31,7 +31,12 @@ public class ScoreManager : SingletonPunCallbacks<ScoreManager>
 
         PlayerController.OnPlayerDied += subtractHalf;
     }
-    
+
+    private void OnDestroy()
+    {
+        PlayerController.OnPlayerDied -= subtractHalf;   
+    }
+
     public void AddScore(int score)
     {
         _score += score;
@@ -60,11 +65,13 @@ public class ScoreManager : SingletonPunCallbacks<ScoreManager>
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
-        if (!changedProps.ContainsKey(Key)) return;
+        if (!changedProps.TryGetValue(Key, out var value)) return;
+        if (value is not int intValue) return;
+
         ScoreData scoreData = new ScoreData()
         {
             Nickname = targetPlayer.NickName,
-            Score = (int)changedProps[Key]
+            Score = intValue
         };
         
         _scores[targetPlayer.ActorNumber] = scoreData;
