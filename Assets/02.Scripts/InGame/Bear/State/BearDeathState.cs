@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 public class BearDeathState : BearState
@@ -20,7 +21,7 @@ public class BearDeathState : BearState
         _remainTime -= Time.deltaTime;
         if (_remainTime <= 0)
         {
-            Object.Destroy(_controller.gameObject);
+            PhotonNetwork.Destroy(_controller.photonView);
         }
     }
 }

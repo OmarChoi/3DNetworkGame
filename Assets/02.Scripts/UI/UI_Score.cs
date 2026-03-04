@@ -1,42 +1,36 @@
-using TMPro;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class UI_Score : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _scoreText;
-    private int _localActorNumber = -1;
+    private List<UI_ScoreItem> _items;
 
     private void Start()
     {
-        ScoreManager.Instance.OnScoreChanged += OnScoreChanged;
+        _items = GetComponentsInChildren<UI_ScoreItem>().ToList();
+        
+        ScoreManager.OnDataChanged += Refresh;
+        Refresh(0);
     }
 
     private void OnDestroy()
     {
-        if (ScoreManager.Instance != null)
-        {
-            ScoreManager.Instance.OnScoreChanged -= OnScoreChanged;
-        }
+        ScoreManager.OnDataChanged -= Refresh;
     }
     
-    private void OnEnable()
+    private void Refresh(int actorNumber)
     {
-        PlayerController.OnLocalPlayerCreated += OnLocalPlayerCreated;
-    }
-
-    private void OnDisable()
-    {
-        PlayerController.OnLocalPlayerCreated -= OnLocalPlayerCreated;
-    }
-
-    private void OnLocalPlayerCreated(PlayerController player)
-    {
-        _localActorNumber = player.PhotonView.Owner.ActorNumber;
-    }
-
-    private void OnScoreChanged(int actorNumber, int score)
-    {
-        if (_localActorNumber != actorNumber) return;
-        _scoreText.text = $"Score: {score}";
+        var scores = ScoreManager.Instance.Scores;
+        if (scores == null) return;
+        var scoresData = scores.Values
+                                .OrderByDescending(x => x.Score)
+                                .ToList();
+        int nData = scoresData.Count;
+        for(int i = 0; i < _items.Count; i++)
+        {
+            if (i >= nData) break;
+            _items[i].Set(scoresData[i]);
+        }
     }
 }

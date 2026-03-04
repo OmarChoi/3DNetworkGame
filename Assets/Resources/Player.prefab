@@ -3436,6 +3436,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c95931b1c5da45e78d14c7b240505bc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWeaponHitAbility
+  _scaleAmount: 0.1
+  _scorePerScaleIncrease: 1000
 --- !u!4 &8678980385834780059 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4502165957148481221, guid: 3617e4093ca8d5145986d37c89cfd692, type: 3}

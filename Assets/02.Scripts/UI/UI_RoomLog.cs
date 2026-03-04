@@ -8,6 +8,7 @@ public class UI_RoomLog : MonoBehaviour
 
     private void Start()
     {
+        _logText.richText = false;
         _logText.text = "방에 입장했습니다.";
         PhotonRoomManager.Instance.OnPlayerEnter += PlayerEnterLog;
         PhotonRoomManager.Instance.OnPlayerLeft += PlayerLeftLog;
