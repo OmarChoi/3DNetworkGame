@@ -11,10 +11,11 @@ public class ScoreManager : SingletonPunCallbacks<ScoreManager>
 {
     private const string Key = "score";
     private int _score;
+    public int Score => _score;
 
     private readonly Dictionary<int, ScoreData> _scores = new Dictionary<int, ScoreData>();
     public ReadOnlyDictionary<int, ScoreData> Scores => new ReadOnlyDictionary<int, ScoreData>(_scores);
-    public static event Action OnDataChanged;
+    public static event Action<int> OnDataChanged;
     public override void OnJoinedRoom()
     {
         foreach (Player player in PhotonNetwork.PlayerList)
@@ -27,11 +28,26 @@ public class ScoreManager : SingletonPunCallbacks<ScoreManager>
             _scores[player.ActorNumber] = scoreData;
         }
         Refresh();
+
+        PlayerController.OnPlayerDied += subtractHalf;
     }
     
     public void AddScore(int score)
     {
         _score += score;
+        Refresh();
+    }
+
+    private void subtractHalf(PlayerController player)
+    {
+        if (!player.PhotonView.IsMine) return;
+        int subtractAmount = (int)(_score / 2.0f);
+        SubtractScore(subtractAmount);
+    }
+    
+    public void SubtractScore(int score)
+    {
+        _score = Mathf.Max(0, _score - score);
         Refresh();
     }
     
@@ -52,6 +68,6 @@ public class ScoreManager : SingletonPunCallbacks<ScoreManager>
         };
         
         _scores[targetPlayer.ActorNumber] = scoreData;
-        OnDataChanged?.Invoke();
+        OnDataChanged?.Invoke(targetPlayer.ActorNumber);
     }
 }

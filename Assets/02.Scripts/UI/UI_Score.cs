@@ -11,7 +11,7 @@ public class UI_Score : MonoBehaviour
         _items = GetComponentsInChildren<UI_ScoreItem>().ToList();
         
         ScoreManager.OnDataChanged += Refresh;
-        Refresh();
+        Refresh(0);
     }
 
     private void OnDestroy()
@@ -19,7 +19,7 @@ public class UI_Score : MonoBehaviour
         ScoreManager.OnDataChanged -= Refresh;
     }
     
-    private void Refresh()
+    private void Refresh(int actorNumber)
     {
         var scores = ScoreManager.Instance.Scores;
         var scoresDatas = scores.Values?

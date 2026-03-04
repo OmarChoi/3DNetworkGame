@@ -5049,7 +5049,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41f41994dffca884ba572e77c3463a71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
-  _scoreAmount: 100
+  _scoreAmount: 2000
   _destroyHeight: -10
   _lifeTime: 30
 --- !u!114 &-4637349361933967886
