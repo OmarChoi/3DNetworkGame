@@ -20,7 +20,7 @@ public class SingletonBehaviour<T> : MonoBehaviour where T : SingletonBehaviour<
             DontDestroyOnLoad(gameObject);
         }
 
-        Initialize();
+        Init();
     }
 
     private void OnDestroy()
@@ -33,6 +33,6 @@ public class SingletonBehaviour<T> : MonoBehaviour where T : SingletonBehaviour<
         }
     }
 
-    protected virtual void Initialize() { }
+    protected virtual void Init() { }
     protected virtual void Cleanup() { }
 }

@@ -21,7 +21,7 @@ public class SingletonPunCallbacks<T> : MonoBehaviourPunCallbacks where T : Sing
             DontDestroyOnLoad(gameObject);
         }
 
-        Initialize();
+        Init();
     }
 
     private void OnDestroy()
@@ -34,6 +34,6 @@ public class SingletonPunCallbacks<T> : MonoBehaviourPunCallbacks where T : Sing
         }
     }
 
-    protected virtual void Initialize() { }
+    protected virtual void Init() { }
     protected virtual void Cleanup() { }
 }

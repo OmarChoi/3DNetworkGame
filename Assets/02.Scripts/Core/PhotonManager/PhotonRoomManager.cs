@@ -18,7 +18,12 @@ public class PhotonRoomManager : SingletonPunCallbacks<PhotonRoomManager>
     {
         _room = PhotonNetwork.CurrentRoom;
 
-        SceneManager.LoadScene("GameScene");
+        PhotonNetwork.LoadLevel("GameScene");
+        // if (PhotonNetwork.IsMasterClient)
+        // {
+        //     // 방장이 아니면 아무 것도 하지 않아도 방장(Master)이 있는 Scene으로 자동으로 옮겨진다.
+        //     // Player 별로 각자 자신만의 Scene에서 작업하고 싶으면 AutomaticallySyncScene을 설정한다.
+        // }
         
         OnDataChanged?.Invoke();
     }

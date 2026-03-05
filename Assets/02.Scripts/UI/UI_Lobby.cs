@@ -2,7 +2,6 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UI_Lobby : MonoBehaviour
 {
@@ -40,6 +39,16 @@ public class UI_Lobby : MonoBehaviour
             MaxPlayers = 20,
             IsVisible = true,
             IsOpen = true
+        };
+
+        roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable()
+        {
+            { "mn", nickname }
+        };
+        
+        roomOptions.CustomRoomPropertiesForLobby = new [] 
+        {
+            "mn"
         };
 
         PhotonNetwork.CreateRoom(roomName, roomOptions);
