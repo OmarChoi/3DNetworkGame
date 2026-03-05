@@ -1,6 +1,7 @@
 using System;
 using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine.SceneManagement;
 
 public class PhotonRoomManager : SingletonPunCallbacks<PhotonRoomManager>
 {
@@ -11,11 +12,15 @@ public class PhotonRoomManager : SingletonPunCallbacks<PhotonRoomManager>
     public event Action<Player> OnPlayerLeft;
     public event Action<string, string> OnPlayerDied;
     
+    protected override bool IsPersistent => true;
+    
     public override void OnJoinedRoom()
     {
         _room = PhotonNetwork.CurrentRoom;
+
+        SceneManager.LoadScene("GameScene");
+        
         OnDataChanged?.Invoke();
-        CharacterSpawner.Instance.SpawnPlayer();
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)

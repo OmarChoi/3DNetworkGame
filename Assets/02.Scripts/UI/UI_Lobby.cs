@@ -1,9 +1,16 @@
+using Photon.Pun;
+using Photon.Realtime;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UI_Lobby : MonoBehaviour
 {
     [SerializeField] private GameObject _maleCharacter;
     [SerializeField] private GameObject _femaleCharacter;
+    [SerializeField] private TMP_InputField _nickNameInputField;
+    [SerializeField] private TMP_InputField _roomNameInputField;
+    
     
     private ECharacterType _characterType;
     
@@ -18,4 +25,23 @@ public class UI_Lobby : MonoBehaviour
         _femaleCharacter.SetActive(_characterType == ECharacterType.Female);
     }
 
+    public void MakeRoom()
+    {
+        string nickname = _nickNameInputField.text;
+        string roomName = _roomNameInputField.text;
+        // Nickname 도메인 분리 후 유효성 검사를 해야 된다.
+        // 유효성 검사는 명세 패턴으로 분리
+        if (string.IsNullOrEmpty(nickname) || string.IsNullOrEmpty(roomName)) return;
+        
+                
+        PhotonNetwork.NickName = nickname;
+        var roomOptions = new RoomOptions
+        {
+            MaxPlayers = 20,
+            IsVisible = true,
+            IsOpen = true
+        };
+
+        PhotonNetwork.CreateRoom(roomName, roomOptions);
+    }
 }
