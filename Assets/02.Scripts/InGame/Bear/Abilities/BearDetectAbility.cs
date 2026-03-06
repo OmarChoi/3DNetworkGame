@@ -39,45 +39,31 @@ public class BearDetectAbility : BearAbility
     private void OnTriggerExit(Collider other)
     {
         if (!other.TryGetComponent(out PlayerController player)) return;
-
-        bool wasTarget = other.transform == Owner.Target;
-        _playersInRange.Remove(player);
-
-        if (wasTarget)
-        {
-            Owner.SetTarget(GetNearestTarget());
-        }
+        RemovePlayerAndRetarget(player);
     }
 
     private void RemoveDeathPlayer(PlayerController player)
     {
         ClearList();
-        bool wasTarget = player.transform == Owner.Target;
-        _playersInRange.Remove(player);
-
-        if (wasTarget)
-        {
-            Owner.SetTarget(GetNearestTarget());
-        }
+        RemovePlayerAndRetarget(player);
     }
 
     private void RemoveLeftPlayer(Player photonPlayer)
     {
         ClearList();
         if (photonPlayer == null) return;
-        
-        PlayerController found = null;
 
-        foreach (PlayerController pc in _playersInRange)
-        {
-            if (pc != null && pc.PhotonView.Owner.ActorNumber != photonPlayer.ActorNumber) continue;
-            found = pc;
-            break;
-        }
+        PlayerController found = _playersInRange.Find(
+            pc => pc != null && pc.PhotonView.Owner.ActorNumber == photonPlayer.ActorNumber);
 
         if (found == null) return;
-        bool wasTarget = (found.transform == Owner.Target);
-        _playersInRange.Remove(found);
+        RemovePlayerAndRetarget(found);
+    }
+
+    private void RemovePlayerAndRetarget(PlayerController player)
+    {
+        bool wasTarget = player.transform == Owner.Target;
+        _playersInRange.Remove(player);
 
         if (wasTarget)
         {
@@ -96,7 +82,7 @@ public class BearDetectAbility : BearAbility
 
         for (int i = 0; i < _playersInRange.Count; i++)
         {
-            float dist = Vector3.Distance(ownerPos, _playersInRange[i].transform.position);
+            float dist = (ownerPos - _playersInRange[i].transform.position).sqrMagnitude;
             if (dist < minDist)
             {
                 minDist = dist;
