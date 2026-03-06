@@ -31,6 +31,6 @@ public class UI_Lobby : MonoBehaviour
         if (string.IsNullOrEmpty(nickname) || string.IsNullOrEmpty(roomName)) return;
 
         var request = new RoomCreationInfo(roomName, nickname);
-        PhotonRoomManager.Instance.CreateRoom(request);
+        PhotonLobbyManager.Instance.CreateRoom(request);
     }
 }

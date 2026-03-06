@@ -12,21 +12,28 @@ public class UI_RoomInfo : MonoBehaviour
     private void Start()
     {
         _roomExitButton.onClick.AddListener(ExitRoom);
-        PhotonRoomManager.Instance.OnDataChanged += Refresh;
+        PhotonRoomManager.Instance.OnPlayerEnter += OnPlayerChanged;
+        PhotonRoomManager.Instance.OnPlayerLeft += OnPlayerChanged;
         Refresh();
     }
-    
+
     private void OnDestroy()
     {
         if (PhotonRoomManager.Instance != null)
         {
-            PhotonRoomManager.Instance.OnDataChanged -= Refresh;
+            PhotonRoomManager.Instance.OnPlayerEnter -= OnPlayerChanged;
+            PhotonRoomManager.Instance.OnPlayerLeft -= OnPlayerChanged;
         }
+    }
+
+    private void OnPlayerChanged(Player player)
+    {
+        Refresh();
     }
     
     private void ExitRoom()
     {
-        // todo. 구현 예정
+        PhotonRoomManager.Instance.LeaveRoom();
     }
     
     private void Refresh()

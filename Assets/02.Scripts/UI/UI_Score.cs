@@ -11,7 +11,6 @@ public class UI_Score : MonoBehaviour
         _items = GetComponentsInChildren<UI_ScoreItem>().ToList();
         
         ScoreManager.OnDataChanged += Refresh;
-        Refresh(0);
     }
 
     private void OnDestroy()

@@ -15,14 +15,14 @@ public class UI_RoomList : MonoBehaviour
 
     private void OnEnable()
     {
-        PhotonRoomManager.Instance.OnRoomListChanged += UpdateRoomList;
+        PhotonLobbyManager.Instance.OnRoomListChanged += UpdateRoomList;
     }
 
     private void OnDisable()
     {
-        if (PhotonRoomManager.Instance != null)
+        if (PhotonLobbyManager.Instance != null)
         {
-            PhotonRoomManager.Instance.OnRoomListChanged -= UpdateRoomList;
+            PhotonLobbyManager.Instance.OnRoomListChanged -= UpdateRoomList;
         }
     }
 

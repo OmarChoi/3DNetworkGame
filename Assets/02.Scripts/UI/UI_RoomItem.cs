@@ -28,6 +28,6 @@ public class UI_RoomItem : MonoBehaviour
     private void EnterRoom()
     {
         if (_roomInfo == null) return;
-        PhotonRoomManager.Instance.JoinRoom(_roomInfo.Name);
+        PhotonLobbyManager.Instance.JoinRoom(_roomInfo.Name);
     }
 }
