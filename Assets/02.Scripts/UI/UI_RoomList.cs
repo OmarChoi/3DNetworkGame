@@ -1,37 +1,37 @@
 using System.Collections.Generic;
 using System.Linq;
 using Photon.Realtime;
+using UnityEngine;
 
-public class UI_RoomList : SingletonPunCallbacks<UI_RoomList>
+public class UI_RoomList : MonoBehaviour
 {
     private List<UI_RoomItem> _roomItems = new List<UI_RoomItem>();
-    private readonly Dictionary<string, RoomInfo> _roomInfos = new Dictionary<string, RoomInfo>();
-    protected override void Init()
+
+    private void Awake()
     {
         _roomItems = GetComponentsInChildren<UI_RoomItem>().ToList();
         HideAllRoomUI();
     }
 
-    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    private void OnEnable()
+    {
+        PhotonRoomManager.Instance.OnRoomListChanged += UpdateRoomList;
+    }
+
+    private void OnDisable()
+    {
+        if (PhotonRoomManager.Instance != null)
+        {
+            PhotonRoomManager.Instance.OnRoomListChanged -= UpdateRoomList;
+        }
+    }
+
+    private void UpdateRoomList(Dictionary<string, RoomInfo> roomInfos)
     {
         HideAllRoomUI();
 
-        foreach (var roomInfo in roomList)
-        {
-            if (roomInfo.RemovedFromList)
-            {
-                _roomInfos.Remove(roomInfo.Name);
-            }
-            else
-            {
-                _roomInfos[roomInfo.Name] = roomInfo;
-            }
-        }
-
-        int roomCount = _roomInfos.Count;
-        List<RoomInfo> rooms = _roomInfos.Values.ToList();
-        
-        for (int i = 0; i < roomCount; i++)
+        var rooms = roomInfos.Values.ToList();
+        for (var i = 0; i < rooms.Count; i++)
         {
             _roomItems[i].Init(rooms[i]);
             _roomItems[i].gameObject.SetActive(true);
