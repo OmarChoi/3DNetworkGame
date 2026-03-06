@@ -9,7 +9,6 @@ public class BearController : MonoBehaviourPun, IDamageable
     private Dictionary<Type, BearState> _states;
     private readonly Dictionary<Type, BearAbility> _abilitiesCache = new Dictionary<Type, BearAbility>();
     private BearState _currentState;
-    private bool _initialized;
 
     public BearStat Stats;
     public event Action<Transform> OnTargetDetected;
@@ -110,8 +109,8 @@ public class BearController : MonoBehaviourPun, IDamageable
     public bool CanAttack()
     {
         if (Target == null) return false;
-        float distance = Vector3.Distance(Target.position, transform.position);
-        return distance <= Stats.AttackDistance;
+        float sqrDistance = (Target.position - transform.position).sqrMagnitude;
+        return sqrDistance <= Stats.AttackDistance * Stats.AttackDistance;
     }
 
     public void NotifyHit()

@@ -4,7 +4,8 @@ public class BearAttackState : BearState
 {
     public BearAttackState(BearController controller) : base(controller) { }
 
-    protected override int AnimTriggerHash => Animator.StringToHash("AttackEnter");
+    private static readonly int _animTriggerHash = Animator.StringToHash("AttackEnter");
+    protected override int AnimTriggerHash => _animTriggerHash;
 
     public override void Enter()
     {

@@ -7,7 +7,8 @@ public class BearDeathState : BearState
     private readonly float _destroyDelay = 3.0f;
 
     public BearDeathState(BearController controller) : base(controller) { }
-    protected override int AnimTriggerHash => Animator.StringToHash("DeathEnter");
+    private static readonly int _animTriggerHash = Animator.StringToHash("DeathEnter");
+    protected override int AnimTriggerHash => _animTriggerHash;
 
     public override void Enter()
     {

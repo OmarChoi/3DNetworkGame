@@ -6,7 +6,8 @@ public class BearIdleState : BearState
     private readonly float _startPatrolTime = 3.0f;
 
     public BearIdleState(BearController controller) : base(controller) { }
-    protected override int AnimTriggerHash => Animator.StringToHash("IdleEnter");
+    private static readonly int _animTriggerHash = Animator.StringToHash("IdleEnter");
+    protected override int AnimTriggerHash => _animTriggerHash;
 
     public override void Enter()
     {

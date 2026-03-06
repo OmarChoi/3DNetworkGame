@@ -3,7 +3,8 @@ using UnityEngine;
 public class BearReturnState : BearState
 {
     public BearReturnState(BearController controller) : base(controller) { }
-    protected override int AnimTriggerHash => Animator.StringToHash("ReturnEnter");
+    private static readonly int _animTriggerHash = Animator.StringToHash("ReturnEnter");
+    protected override int AnimTriggerHash => _animTriggerHash;
 
     public override void Enter()
     {

@@ -6,7 +6,8 @@ public class BearWaitAttackState : BearState
     private readonly float _attackCooldown = 2.0f;
 
     public BearWaitAttackState(BearController controller) : base(controller) { }
-    protected override int AnimTriggerHash => Animator.StringToHash("WaitAttackEnter");
+    private static readonly int _animTriggerHash = Animator.StringToHash("WaitAttackEnter");
+    protected override int AnimTriggerHash => _animTriggerHash;
 
     public override void Enter()
     {
