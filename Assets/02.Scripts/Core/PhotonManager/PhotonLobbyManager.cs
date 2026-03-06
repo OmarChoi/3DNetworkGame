@@ -11,9 +11,22 @@ public class PhotonLobbyManager : SingletonPunCallbacks<PhotonLobbyManager>
 
     protected override bool IsPersistent => true;
 
+    public void SetNickname(string nickname)
+    {
+        PhotonNetwork.NickName = nickname;
+    }
+
+    private void EnsureNickname()
+    {
+        if (string.IsNullOrEmpty(PhotonNetwork.NickName))
+        {
+            PhotonNetwork.NickName = $"guest_{UnityEngine.Random.Range(100, 999)}";
+        }
+    }
+
     public void CreateRoom(RoomCreationInfo info)
     {
-        PhotonNetwork.NickName = info.Nickname;
+        EnsureNickname();
 
         var roomOptions = new RoomOptions
         {
@@ -24,7 +37,7 @@ public class PhotonLobbyManager : SingletonPunCallbacks<PhotonLobbyManager>
 
         roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable()
         {
-            { "mn", info.Nickname }
+            { "mn", PhotonNetwork.NickName }
         };
 
         roomOptions.CustomRoomPropertiesForLobby = new[]
@@ -37,6 +50,7 @@ public class PhotonLobbyManager : SingletonPunCallbacks<PhotonLobbyManager>
 
     public void JoinRoom(string roomName)
     {
+        EnsureNickname();
         PhotonNetwork.JoinRoom(roomName);
     }
 

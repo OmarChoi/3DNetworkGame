@@ -11,6 +11,16 @@ public class UI_Lobby : MonoBehaviour
 
     private ECharacterType _characterType;
 
+    private void Start()
+    {
+        _nickNameInputField.onValueChanged.AddListener(OnNicknameChanged);
+    }
+
+    private void OnNicknameChanged(string nickname)
+    {
+        PhotonLobbyManager.Instance.SetNickname(nickname);
+    }
+
     public void OnClickMale() => OnClickCharacterButton(ECharacterType.Male);
     public void OnClickFemale() => OnClickCharacterButton(ECharacterType.Female);
 
@@ -30,7 +40,7 @@ public class UI_Lobby : MonoBehaviour
         // 유효성 검사는 명세 패턴으로 분리
         if (string.IsNullOrEmpty(nickname) || string.IsNullOrEmpty(roomName)) return;
 
-        var request = new RoomCreationInfo(roomName, nickname);
+        var request = new RoomCreationInfo(roomName);
         PhotonLobbyManager.Instance.CreateRoom(request);
     }
 }

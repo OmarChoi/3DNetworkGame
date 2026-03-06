@@ -17,7 +17,7 @@ public class ScoreManager : SingletonPunCallbacks<ScoreManager>
     protected override void Init()
     {
         PlayerController.OnLocalPlayerCreated += OnLocalPlayerCreated;
-        PlayerController.OnPlayerDied += subtractHalf;
+        PlayerController.OnPlayerDied += SubtractHalf;
     }
 
     private void OnLocalPlayerCreated(PlayerController player)
@@ -34,10 +34,10 @@ public class ScoreManager : SingletonPunCallbacks<ScoreManager>
         Refresh();
     }
 
-    private void OnDestroy()
+    protected override void Cleanup()
     {
         PlayerController.OnLocalPlayerCreated -= OnLocalPlayerCreated;
-        PlayerController.OnPlayerDied -= subtractHalf;
+        PlayerController.OnPlayerDied -= SubtractHalf;
     }
 
     public void AddScore(int score)
@@ -46,7 +46,7 @@ public class ScoreManager : SingletonPunCallbacks<ScoreManager>
         Refresh();
     }
 
-    private void subtractHalf(PlayerController player)
+    private void SubtractHalf(PlayerController player)
     {
         if (!player.PhotonView.IsMine) return;
         int subtractAmount = (int)(_score / 2.0f);

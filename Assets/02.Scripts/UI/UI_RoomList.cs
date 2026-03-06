@@ -31,7 +31,8 @@ public class UI_RoomList : MonoBehaviour
         HideAllRoomUI();
 
         var rooms = roomInfos.Values.ToList();
-        for (var i = 0; i < rooms.Count; i++)
+        int count = Mathf.Min(rooms.Count, _roomItems.Count);
+        for (var i = 0; i < count; i++)
         {
             _roomItems[i].Init(rooms[i]);
             _roomItems[i].gameObject.SetActive(true);

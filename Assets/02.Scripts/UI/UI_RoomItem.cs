@@ -21,7 +21,7 @@ public class UI_RoomItem : MonoBehaviour
     {
         _roomInfo = roomInfo;
         _roomNameText.text = roomInfo.Name;
-        _masterNicknameText.text = roomInfo.CustomProperties["mn"].ToString();
+        _masterNicknameText.text = roomInfo.CustomProperties.TryGetValue("mn", out var mn) ? mn.ToString() : "Unknown";
         _playerCountText.text = $"{roomInfo.PlayerCount}/{roomInfo.MaxPlayers}";
     }
 
@@ -29,5 +29,6 @@ public class UI_RoomItem : MonoBehaviour
     {
         if (_roomInfo == null) return;
         PhotonLobbyManager.Instance.JoinRoom(_roomInfo.Name);
+
     }
 }
