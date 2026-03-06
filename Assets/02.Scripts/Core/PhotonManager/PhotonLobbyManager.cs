@@ -37,12 +37,12 @@ public class PhotonLobbyManager : SingletonPunCallbacks<PhotonLobbyManager>
 
         roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable()
         {
-            { "mn", PhotonNetwork.NickName }
+            { PhotonPropertyKeys.MasterNickname, PhotonNetwork.NickName }
         };
 
         roomOptions.CustomRoomPropertiesForLobby = new[]
         {
-            "mn"
+            PhotonPropertyKeys.MasterNickname
         };
 
         PhotonNetwork.CreateRoom(info.RoomName, roomOptions);
