@@ -6,27 +6,35 @@ public class PhotonRoomManager : SingletonPunCallbacks<PhotonRoomManager>
 {
     private Room _room;
     public Room Room => _room;
-    public event Action OnDataChanged;
     public event Action<Player> OnPlayerEnter;
     public event Action<Player> OnPlayerLeft;
     public event Action<string, string> OnPlayerDied;
-    
+
+    protected override bool IsPersistent => true;
+
+    public void LeaveRoom()
+    {
+        PhotonNetwork.LeaveRoom();
+    }
+
     public override void OnJoinedRoom()
     {
         _room = PhotonNetwork.CurrentRoom;
-        OnDataChanged?.Invoke();
-        CharacterSpawner.Instance.SpawnPlayer();
+    }
+
+    public override void OnLeftRoom()
+    {
+        _room = null;
+        PhotonNetwork.LoadLevel("LobbyScene");
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        OnDataChanged?.Invoke();
         OnPlayerEnter?.Invoke(newPlayer);
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        OnDataChanged?.Invoke();
         OnPlayerLeft?.Invoke(otherPlayer);
     }
 
