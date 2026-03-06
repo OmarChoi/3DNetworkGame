@@ -3,7 +3,8 @@ using UnityEngine;
 public class BearHitState : BearState
 {
     public BearHitState(BearController controller) : base(controller) { }
-    protected override int AnimTriggerHash => Animator.StringToHash("HitEnter");
+    private static readonly int _animTriggerHash = Animator.StringToHash("HitEnter");
+    protected override int AnimTriggerHash => _animTriggerHash;
 
     public override void Enter()
     {

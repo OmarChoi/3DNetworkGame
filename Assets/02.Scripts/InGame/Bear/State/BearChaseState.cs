@@ -3,7 +3,11 @@ using UnityEngine;
 public class BearChaseState : BearState
 {
     public BearChaseState(BearController controller) : base(controller) { }
-    protected override int AnimTriggerHash => Animator.StringToHash("ChaseEnter");
+    private static readonly int _animTriggerHash = Animator.StringToHash("ChaseEnter");
+    protected override int AnimTriggerHash => _animTriggerHash;
+  
+    private const float PathUpdateInterval = 0.1f;
+    private float _pathUpdateTimer;
 
     public override void Enter()
     {
@@ -13,8 +17,7 @@ public class BearChaseState : BearState
 
     public override void Update()
     {
-        Agent.SetDestination(_controller.Target.position);
-
+        UpdatePath();
         if (_controller.CanAttack())
         {
             _controller.ChangeState<BearAttackState>();
@@ -27,6 +30,16 @@ public class BearChaseState : BearState
         Agent.ResetPath();
     }
 
+    private void UpdatePath()
+    {
+        _pathUpdateTimer -= Time.deltaTime;
+        if (_pathUpdateTimer <= 0f)
+        {
+            _pathUpdateTimer = PathUpdateInterval;
+            Agent.SetDestination(_controller.Target.position);
+        }
+    }
+    
     private void TransitionToReturn()
     {
         _controller.ChangeState<BearReturnState>();

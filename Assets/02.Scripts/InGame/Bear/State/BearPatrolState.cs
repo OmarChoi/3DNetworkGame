@@ -7,7 +7,8 @@ public class BearPatrolState : BearState
 
     public BearPatrolState(BearController controller) : base(controller) { }
 
-    protected override int AnimTriggerHash => Animator.StringToHash("PatrolEnter");
+    private static readonly int _animTriggerHash = Animator.StringToHash("PatrolEnter");
+    protected override int AnimTriggerHash => _animTriggerHash;
 
     public override void Enter()
     {

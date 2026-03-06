@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BearHealthUI : BearAbility
+public class UI_BearHealth : BearAbility
 {
     [SerializeField] private Image _healthGauge;
     private Camera _camera;
